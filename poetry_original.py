@@ -17,9 +17,11 @@ def generate_poetry_corpus_lines() -> List:
     return all_lines
 
 #####
-
+# Note: doesn't work with "girlfriend", list out of range, 
+# TODO handle in site
+# TODO trace back what happens and account for it
 class Poem:
-    def __init__(self, seed_word, min_line_len=32, max_line_len=48):
+    def __init__(self, seed_word, min_line_len=32):
         max_line_choices = [48, 65, 80, 120]
         self.all_lines = generate_poetry_corpus_lines()
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(max_line_choices))
@@ -27,8 +29,6 @@ class Poem:
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
         self.rhyming_part_for_word = pronouncing.rhyming_part(phones)
-        # self.min_line_len = min_line_len
-        # self.max_line_len = max_line_len
 
     def generate_rhyming_part_defaultdict(self, min_len, max_len) -> defaultdict:
         """Returns a default dict structure of 
