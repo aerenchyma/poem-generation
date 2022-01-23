@@ -93,6 +93,7 @@ class Poem:
             self.title = " ".join(title_list[:-1])
         else:
             self.title = title
+        return self.title
 
     def generate_stanza(self):
         """Generates one poem stanza via complicated/silly rules"""
@@ -157,8 +158,9 @@ class Poem:
         """Returns an html-formatted poem string.
         See site.py / self.generate_poem, self.generate_title"""
         self.generate_poem()
-        poem_rep = self.full_poem.replace('\n','</br>')
-        self.site_rep_text = poem_rep
+        poem_rep = self.full_poem.split("\n")
+        self.site_rep_text = poem_rep # list of lines
+        return self.site_rep_text
         # return f"<h2><i>{self.title}</i></h2><br><br>{poem_rep}<br><br><a href='/'>Try again</a>" # temp/test
 
 

@@ -8,7 +8,9 @@
     <div style="padding-left: 50px;">
     <br>
   
-    {{ poem_text }}
+    {% for ln in poem_text %}
+        {{ ln }} <br>
+    {% endfor %}
 
     </div>
     </span>

@@ -23,7 +23,7 @@ app.config['SECRET_KEY'] = 'adgsdfsadfdflsdfsj'
 app.config['HEROKU_ON'] = os.environ.get('HEROKU')
 
 # TODO: configure db stuff / add safe config
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or "postgresql://localhost/corpus_data"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or "postgresql://localhost/poetry_data"
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -132,8 +132,8 @@ def index():
 if __name__ == '__main__':
     db.create_all() # TODO check ok
     # If the created database is empty, then fill it with the lines stuff
-    if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
-        db_setup()
+    # if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
+    #     db_setup()
 
     if app.config['HEROKU_ON']:
         app.debug = False
