@@ -1,12 +1,11 @@
-# from bottle import route, run, get, post, request, error, template, static_file
-from poetry import Poem, generate_poetry_corpus_lines
+import poetry_original
 import os, json
 from flask import Flask, render_template, url_for, redirect, session, flash, request
-from flask_wtf import FlaskForm # todo install, pipfile etc
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate# , MigrateCommand
+from flask_migrate import Migrate
 
 # TODO: add static file as necessary
 # Static files CSS
@@ -37,26 +36,26 @@ session = db.session
 
 # Models
 
-class CorpusLine(db.Model):
-    __tablename__ = "lines"
-    id = db.Column(db.Integer, primary_key=True)
-    line = db.Column(db.Text) # Text containing JSON objects, I am very lazy
+# class CorpusLine(db.Model):
+#     __tablename__ = "lines"
+#     id = db.Column(db.Integer, primary_key=True)
+#     line = db.Column(db.Text) # Text containing JSON objects, I am very lazy
 
 # TODO; store/permalink the poems??? tbd
 
 # Set up database if necessary
 
-def db_setup(): # TODO: redo so that we don't have to do the whole lines thing in generating a poem...
-    """Assuming db has been created with CorpusLine model, 
-    fill CorpusLine table with lines from cited corpus"""
-    all_lines = generate_poetry_corpus_lines()
-    for l in all_lines:
-        # Make the dictionary a string
-        l = json.dumps(l) # lol ugh
-        item = CorpusLine(line=l)
-        session.add(item)
-        # session.commit() 
-    session.commit() # TODO: is that too much to add at once? prob fine, check
+# def db_setup(): # TODO: redo so that we don't have to do the whole lines thing in generating a poem...
+#     """Assuming db has been created with CorpusLine model, 
+#     fill CorpusLine table with lines from cited corpus"""
+#     all_lines = generate_poetry_corpus_lines()
+#     for l in all_lines:
+#         # Make the dictionary a string
+#         l = json.dumps(l) # lol ugh
+#         item = CorpusLine(line=l)
+#         session.add(item)
+#         # session.commit() 
+#     session.commit() # TODO: is that too much to add at once? prob fine, check
 
 
 # Forms
@@ -78,8 +77,6 @@ class WordForm(FlaskForm):
 
 
 
-
-
 # Routes
 
 # @get('/') 
@@ -92,18 +89,15 @@ def index():
     form = WordForm()
     if request.method == "POST":
         # get result from form
-        # print("validated")
         word = form.seed_word.data
-        # word = request.get("seed_word")
-        print(word, "!got")
-        # get lines from db
-        lines = CorpusLine.query.all()
+
         # generate poem and store
-        p = Poem(seed_word=word,lines_source=lines)
+        p = poetry_original.Poem(seed_word=word)
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
+        poem_title = p.generate_title()
         # render poem
-        return render_template('poem.html',poem_text=poem_rep, form=form)
+        return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
         # TODO? save poem and whatever (later)
     else:
         return render_template('home.html',form=form) 

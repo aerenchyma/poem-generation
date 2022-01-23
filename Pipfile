@@ -5,10 +5,15 @@ name = "pypi"
 
 [packages]
 pronouncing = "*"
-bottle = "*"
+flask = "*"
+flask_sqlalchemy = "*"
+flask_migrate = "*"
+flask_wtf = "*"
 gunicorn = "*"
+markovify = "*"
+wtforms = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"

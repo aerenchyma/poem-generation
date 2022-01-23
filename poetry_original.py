@@ -13,29 +13,22 @@ def generate_poetry_corpus_lines() -> List:
     # TODO: do this quicker -- hm
     all_lines = []
     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
-        # all_lines.append(json.loads(line.strip())) # TODO - is the single/double quotes problem here??
-        all_lines.append(json.loads(line.strip())) # like dump it json wise? will that help? TODO??? ^
-    return all_lines # lines are json objects - strings
+        all_lines.append(json.loads(line.strip()))
+    return all_lines
 
 #####
 
-def get_line_text(input_string):
-    # print("initial line", input_string.line)
-    # return json.loads(input_string.line.replace("'",'"'))["s"]
-    # return json.loads(input_string.line)["s"]
-    return json.loads(input_string)["s"]
-
-
 class Poem:
-    def __init__(self, seed_word, lines_source, min_line_len=32, max_line_len=48): # TODO: accept lines instead and make subsequent edits (so we can grab from db)
+    def __init__(self, seed_word, min_line_len=32, max_line_len=48):
         max_line_choices = [48, 65, 80, 120]
-        self.all_lines = [get_line_text(l) for l in lines_source] # expect this to be the return value of generate_poetry_corpus_lines # TODO remove the 20 limit, just for testing
-        #prev: #generate_poetry_corpus_lines() # TODO: accept lines instead
+        self.all_lines = generate_poetry_corpus_lines()
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(max_line_choices))
         # Set up ability to seed by word, TODO neaten
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
         self.rhyming_part_for_word = pronouncing.rhyming_part(phones)
+        # self.min_line_len = min_line_len
+        # self.max_line_len = max_line_len
 
     def generate_rhyming_part_defaultdict(self, min_len, max_len) -> defaultdict:
         """Returns a default dict structure of 
@@ -45,10 +38,8 @@ class Poem:
         : lists of lines that end with those words (lists of strs)
         Code borrowed directly from Allison Parrish's examples."""
         by_rhyming_part = defaultdict(lambda: defaultdict(list))
-        for l in self.all_lines: # TODO use lines as set up properly - is this all set?
-            # text = json.loads(l)['s']# l is a CorpusLine object in the db used by site.py TODO check, previously was l['s']
-            text = l # managed in init based on CorpusLine obj
-            print("line got is:", l)
+        for line in self.all_lines:
+            text = line['s']
             # Uniform lengths original: if not(32 < len(text) < 48)
             if not(min_len < len(text) < max_len): # only use lines of uniform lengths
                 continue
@@ -64,8 +55,8 @@ class Poem:
 
     def get_random_line(self) -> str:
         """Returns a random line from the poetry corpus"""
-        # lines = [line['s'] for line in self.all_lines]
-        return random.choice(self.all_lines) # For example, a string: "And his nerves thrilled like throbbing violins"
+        lines = [line['s'] for line in self.all_lines]
+        return random.choice(lines) # For example, a string: "And his nerves thrilled like throbbing violins"
 
     def handle_line_punctuation(self, line, title=False):
         """Handles line-end punctuation for some fun verse finality"""
@@ -93,8 +84,7 @@ class Poem:
         
     def generate_title(self):
         stopwords = ["a","an","the","or","as","of","at","the"] # stopwords that I care about here
-        # lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
-        lines_with_the = [line for line in self.all_lines if re.search(r"\bthe\b", line, re.I)]
+        lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
         title = self.handle_line_punctuation(random.choice(lines_with_the), title=True)
         title_list = title.split()
         if title_list[-2] in stopwords and title_list[-1] in stopwords:
@@ -127,15 +117,11 @@ class Poem:
         else:
             # two random couplets; # TODO: decide if there's a more creative thing here
             # followed by a random line with the word in it
-            # lines_with_word = [line['s'] for line in self.all_lines if re.search(fr"\b{self.seed_word}\b", line.line, re.I)]
-            lines_with_word = [line for line in self.all_lines if re.search(fr"\b{self.seed_word}\b", line, re.I)]
+            lines_with_word = [line['s'] for line in self.all_lines if re.search(fr"\b{self.seed_word}\b", line['s'], re.I)]
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
             # Use Allison's example of grabbing some couplets to grab 2
             for i in range(2):
-                if rhyme_groups:
-                    group = random.choice(rhyme_groups) # TODO: if there are none it breaks and is ugly, need to catch exception
-                else: # TODO: use this to catch the exception or fill in default rhyme groups. not actually this.
-                    group = {"random":("pathos","vapor"),"word":("heaven","rivers")} # TODO: not actually this, just for testing
+                group = random.choice(rhyme_groups)
                 words = random.sample(list(group.keys()), 2)
                 stanza_list.append(random.choice(group[words[0]]))
                 stanza_list.append(random.choice(group[words[1]]))
@@ -173,23 +159,9 @@ class Poem:
         self.generate_poem()
         poem_rep = self.full_poem.replace('\n','</br>')
         self.site_rep_text = poem_rep
-        return self.site_rep_text
         # return f"<h2><i>{self.title}</i></h2><br><br>{poem_rep}<br><br><a href='/'>Try again</a>" # temp/test
 
 
-
-# test
-
 if __name__ == "__main__":
-    pass
-    lines = generate_poetry_corpus_lines()
-    print(lines[10])
-    # print(json.loads(str(lines[1])))
-    p = Poem(seed_word="leaf",lines_source=lines)
-    print(p.generate_poem())
-
-
-
-
-
-
+    p = Poem("genius")
+    print(p.__str__())
