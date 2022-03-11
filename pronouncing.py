@@ -4,7 +4,7 @@
 
 from __future__ import print_function
 import re
-from pkg_resources import resource_stream
+# from pkg_resources import resource_stream
 import collections
 import cmudict
 
