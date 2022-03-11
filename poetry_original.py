@@ -2,7 +2,6 @@ import gzip, json
 import re
 import random
 import pronouncing
-import markovify
 from collections import defaultdict
 from typing import List
 

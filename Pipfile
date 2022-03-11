@@ -4,13 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pronouncing = "0.2.0"
+cmudict = "*"
 flask = "*"
 flask_sqlalchemy = "*"
 flask_migrate = "*"
 flask_wtf = "*"
 gunicorn = "*"
-markovify = "*"
 wtforms = "*"
 psycopg2 = "*"
 

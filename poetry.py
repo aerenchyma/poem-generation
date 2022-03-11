@@ -2,7 +2,6 @@ import gzip, json
 import re
 import random
 import pronouncing
-import markovify
 from collections import defaultdict
 from typing import List
 
@@ -13,16 +12,12 @@ def generate_poetry_corpus_lines() -> List:
     # TODO: do this quicker -- hm
     all_lines = []
     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
-        # all_lines.append(json.loads(line.strip())) # TODO - is the single/double quotes problem here??
         all_lines.append(json.loads(line.strip())) # like dump it json wise? will that help? TODO??? ^
     return all_lines # lines are json objects - strings
 
 #####
 
 def get_line_text(input_string):
-    # print("initial line", input_string.line)
-    # return json.loads(input_string.line.replace("'",'"'))["s"]
-    # return json.loads(input_string.line)["s"]
     return json.loads(input_string)["s"]
 
 
