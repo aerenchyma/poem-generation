@@ -164,5 +164,6 @@ class Poem:
 
 
 if __name__ == "__main__":
-    p = Poem("genius")
-    print(p.__str__())
+    # p = Poem("genius")
+    # print(p.__str__())
+    pass
