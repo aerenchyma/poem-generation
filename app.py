@@ -130,7 +130,7 @@ def index():
 # Main
 
 if __name__ == '__main__':
-    db.create_all() # TODO check ok
+    # db.create_all() # TODO check ok
     # If the created database is empty, then fill it with the lines stuff
     # if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
     #     db_setup()
@@ -140,7 +140,7 @@ if __name__ == '__main__':
         # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
         app.run()
     else:
-        app.debug = True 
+        app.debug = False 
         # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
         app.run()
 
