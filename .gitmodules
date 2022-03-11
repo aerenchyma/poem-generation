@@ -1,0 +1,3 @@
+[submodule "python-cmudict"]
+	path = python-cmudict
+	url = https://github.com/prosegrinder/python-cmudict.git
