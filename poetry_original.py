@@ -7,6 +7,21 @@ from typing import List
 
 ## Helper functions (largely from aparrish's examples)
 
+# def save_poetry_corpus_lines():
+#     all_lines = []
+#     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
+#         all_lines.append(json.loads(line.strip()))
+#     # json_obj = json.dumps(all_lines)
+#     f = open("poetry_corpus_text.txt",'w')
+#     # f.write(json_obj)
+#     # f.close()
+#     lines_text = [l["s"] for l in all_lines]
+#     lines_text_full = "\n".join(lines_text)
+#     f.write(lines_text_full)
+#     f.close()
+
+
+
 def generate_poetry_corpus_lines() -> List:
     """Returns a list of all lines from Gutenberg poetry corpus"""
     # TODO: do this quicker -- hm
@@ -15,6 +30,14 @@ def generate_poetry_corpus_lines() -> List:
         all_lines.append(json.loads(line.strip()))
     return all_lines
 
+def get_poetry_lines() -> List:
+    f =  open("poetry_corpus_text.txt",'r')
+    lines = f.readlines()
+    f.close()
+    return lines
+
+# tmp = generate_poetry_corpus_lines()
+
 #####
 # Note: doesn't work with "girlfriend", list out of range, 
 # TODO handle in site
@@ -22,12 +45,16 @@ def generate_poetry_corpus_lines() -> List:
 class Poem:
     def __init__(self, seed_word, min_line_len=32):
         max_line_choices = [48, 65, 80, 120]
-        self.all_lines = generate_poetry_corpus_lines()
+        self.generate_all_lines()
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(max_line_choices))
         # Set up ability to seed by word, TODO neaten
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
         self.rhyming_part_for_word = pronouncing.rhyming_part(phones)
+
+    def generate_all_lines(self):
+        # self.all_lines = tmp#generate_poetry_corpus_lines()
+        self.all_lines = get_poetry_lines()
 
     def generate_rhyming_part_defaultdict(self, min_len, max_len) -> defaultdict:
         """Returns a default dict structure of 
@@ -38,13 +65,16 @@ class Poem:
         Code borrowed directly from Allison Parrish's examples."""
         by_rhyming_part = defaultdict(lambda: defaultdict(list))
         for line in self.all_lines:
-            text = line['s']
+            # text = line['s']
+            text = line # TODO? if this work this reassignment isn't nec
             # Uniform lengths original: if not(32 < len(text) < 48)
             if not(min_len < len(text) < max_len): # only use lines of uniform lengths
                 continue
-            match = re.search(r'(\b\w+\b)\W*$', text)
-            if match:
-                last_word = match.group()
+            # match = re.search(r'(\b\w+\b)\W*$', text) # according to cProfile this takes a long time
+            match = text.split()[-1].replace(",","").replace(".","").replace(";","")
+            if len(match) >= 2:
+                # last_word = match.group() # and therefore this would be a problem too
+                last_word = match
                 pronunciations = pronouncing.phones_for_word(last_word)
                 if len(pronunciations) > 0:
                     rhyming_part = pronouncing.rhyming_part(pronunciations[0])
@@ -54,7 +84,8 @@ class Poem:
 
     def get_random_line(self) -> str:
         """Returns a random line from the poetry corpus"""
-        lines = [line['s'] for line in self.all_lines]
+        # lines = [line['s'] for line in self.all_lines]
+        lines = [line for line in self.all_lines]
         return random.choice(lines) # For example, a string: "And his nerves thrilled like throbbing violins"
 
     def handle_line_punctuation(self, line, title=False):
@@ -62,12 +93,14 @@ class Poem:
         replace_set = ",:;'\""
         maintain_set = "-!?."
         if not title:
-            if line[-1] in replace_set:
-                return line[:-1] + "."
-            elif line[-1] in maintain_set:
-                return line
+            if line[-2] in replace_set:
+                return line[:-2] #+ "."
             else:
-                return line + "."
+                return line
+            # elif line[-1] in maintain_set:
+            #     return line
+            # else:
+            #     return line#[:-1] #+ "."
         else:
             fixed = ""
             for ch in line:
@@ -83,7 +116,8 @@ class Poem:
         
     def generate_title(self):
         stopwords = ["a","an","the","or","as","of","at","the"] # stopwords that I care about here
-        lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
+        # lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
+        lines_with_the = [line for line in self.all_lines if "the" in line]
         title = self.handle_line_punctuation(random.choice(lines_with_the), title=True)
         title_list = title.split()
         if title_list[-2] in stopwords and title_list[-1] in stopwords:
@@ -140,11 +174,17 @@ class Poem:
 
         # Now: controlling len of stanza and such, but always doing 3
         # TODO: input to control how many stanzas, or some element of randomness?
-        self.full_poem += "\n".join(self.generate_stanza())
-        self.full_poem += "\n\n"
-        self.full_poem += "\n".join(self.generate_stanza())
-        self.full_poem += "\n\n"
-        self.full_poem += "\n".join(self.generate_stanza())
+        # self.full_poem += "\n".join(self.generate_stanza())
+        # self.full_poem += "\n\n"
+        # self.full_poem += "\n".join(self.generate_stanza())
+        # self.full_poem += "\n\n"
+        # self.full_poem += "\n".join(self.generate_stanza())
+        # self.full_poem_list = self.full_poem.split("\n")
+        self.full_poem += "".join(self.generate_stanza())
+        self.full_poem += "\n"
+        self.full_poem += "".join(self.generate_stanza())
+        self.full_poem += "\n"
+        self.full_poem += "".join(self.generate_stanza())
         self.full_poem_list = self.full_poem.split("\n")
         return self.full_poem
         # return self.full_poem.split("\n") # debug
@@ -164,6 +204,30 @@ class Poem:
 
 
 if __name__ == "__main__":
-    # p = Poem("genius")
+    # import time
+    # start_time = time.time()
+    # p = Poem("hi")
+    # executionTime = (time.time() - start_time)
+    # print('Execution time in seconds for poem 1: ' + str(executionTime))
     # print(p.__str__())
+
+    # start_time_2 = time.time()
+    # p = Poem("hi")
+    # executionTime2 = (time.time() - start_time_2)
+    # print('Execution time in seconds for poem 2: ' + str(executionTime2))
+    # print(p.__str__())
+
+    # start_time_3 = time.time()
+    # p = Poem("hi")
+    # executionTime3 = (time.time() - start_time_3)
+    # print('Execution time in seconds for poem 3: ' + str(executionTime3))
+    # print(p.__str__())
+
+
+    p = Poem("hi")
+    print(p.__str__())
+    p2 = Poem("hi")
+    print(p2.__str__())
     pass
+
+    # save_poetry_corpus_lines()
