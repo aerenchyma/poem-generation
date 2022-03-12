@@ -8,6 +8,8 @@ from typing import List
 ## Helper functions (largely from aparrish's examples)
 
 # def save_poetry_corpus_lines():
+#     """Depends upon existence of gutenberg-poetry-v001.ndjson.gz,
+#     writing this into a text file plainly speeds up db creation later"""
 #     all_lines = []
 #     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
 #         all_lines.append(json.loads(line.strip()))
@@ -20,17 +22,18 @@ from typing import List
 #     f.write(lines_text_full)
 #     f.close()
 
-
-
-def generate_poetry_corpus_lines() -> List:
-    """Returns a list of all lines from Gutenberg poetry corpus"""
-    # TODO: do this quicker -- hm
-    all_lines = []
-    for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
-        all_lines.append(json.loads(line.strip()))
-    return all_lines
+# def generate_poetry_corpus_lines() -> List:
+#     """Returns a list of all lines from Gutenberg poetry corpus
+#     Direct from the ndjson.gz file"""
+#     # TODO: do this quicker -- hm
+#     all_lines = []
+#     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
+#         all_lines.append(json.loads(line.strip()))
+#     return all_lines
 
 def get_poetry_lines() -> List:
+    """Assuming you have previously run save_poetry_corpus_lines
+    and then commented it out again -- don't commit the huge txt file"""
     f =  open("poetry_corpus_text.txt",'r')
     lines = f.readlines()
     f.close()
