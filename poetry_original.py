@@ -94,7 +94,7 @@ class Poem:
         maintain_set = "-!?."
         if not title:
             if line[-2] in replace_set:
-                return line[:-2] #+ "."
+                return line[:-2]+"\n" #+ "."
             else:
                 return line
             # elif line[-1] in maintain_set:
@@ -151,7 +151,8 @@ class Poem:
         else:
             # two random couplets; # TODO: decide if there's a more creative thing here
             # followed by a random line with the word in it
-            lines_with_word = [line['s'] for line in self.all_lines if re.search(fr"\b{self.seed_word}\b", line['s'], re.I)]
+            # lines_with_word = [line['s'] for line in self.all_lines if re.search(fr"\b{self.seed_word}\b", line['s'], re.I)]
+            lines_with_word = [line for line in self.all_lines if self.seed_word in line]
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
             # Use Allison's example of grabbing some couplets to grab 2
             for i in range(2):
