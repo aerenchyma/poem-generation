@@ -126,7 +126,7 @@ class Poem:
             self.title = " ".join(title_list[:-1])
         else:
             self.title = title
-        return self.title
+        return self.title[:-1] # Ensure there isn't a newline at end of title
 
     def generate_stanza(self):
         """Generates one poem stanza via complicated/silly rules"""
@@ -226,8 +226,10 @@ if __name__ == "__main__":
 
 
     p = Poem("hi")
+    print("***",p.generate_title(),"***\n\n")
     print(p.__str__())
     p2 = Poem("hi")
+    print("***",p2.generate_title(),"***\n\n")
     print(p2.__str__())
     pass
 
