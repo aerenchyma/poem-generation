@@ -32,14 +32,13 @@ from typing import List
 #     return all_lines
 
 def get_poetry_lines() -> List:
-    """Assuming you have previously run save_poetry_corpus_lines
+    """Assuming you have previously run save_poetry_corpus_lines to save file,
     and then commented it out again -- don't commit the huge txt file"""
     f =  open("poetry_corpus_text.txt",'r')
     lines = f.readlines()
     f.close()
     return lines
 
-# tmp = generate_poetry_corpus_lines()
 
 #####
 # Note: doesn't work with "girlfriend", list out of range, 
@@ -227,13 +226,13 @@ if __name__ == "__main__":
     # print('Execution time in seconds for poem 3: ' + str(executionTime3))
     # print(p.__str__())
 
+    ## Fun
+    # p = Poem("hi")
+    # print("***",p.generate_title(),"***\n\n")
+    # print(p.__str__())
+    # p2 = Poem("hi")
+    # print("***",p2.generate_title(),"***\n\n")
+    # print(p2.__str__())
+    # pass
 
-    p = Poem("hi")
-    print("***",p.generate_title(),"***\n\n")
-    print(p.__str__())
-    p2 = Poem("hi")
-    print("***",p2.generate_title(),"***\n\n")
-    print(p2.__str__())
-    pass
-
-    # save_poetry_corpus_lines()
+    save_poetry_corpus_lines()
