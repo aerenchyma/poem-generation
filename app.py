@@ -142,33 +142,28 @@ def index():
 # Main
 
 if __name__ == '__main__':
-    db.create_all() # TODO check ok
+    # db.create_all() # TODO check ok
     # If the created database is empty, then fill it with the lines stuff
-    if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
-        db_setup() # This should only run locally, and then put db on server
-    else:
-        print("Yes, there is content in the LINES table / CorpusLine model!")
+    # if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
+    #     db_setup() # This should only run locally, and then put db on server
+    # else:
+    #     print("Yes, there is content in the LINES table / CorpusLine model!")
 
-    if app.config['HEROKU_ON']: # TODO change this env var for any server
-        app.debug = False
-        # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
-        app.run()
-    else:
-        app.debug = True # for now
-        # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
-        app.run()
+    # if app.config['HEROKU_ON']: # TODO change this env var for any server
+    #     app.debug = False
+    #     # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
+    #     app.run()
+    # else:
+    app.debug = True # for now
+    # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
+    app.run()
 
 
 ####
 
 # TODO: 
-# convert to flask, ex https://github.com/SI508-F18/Songs-App-Class-Example/blob/master/main_app.py
-# set up for heroku but on flask, eg instrs https://paper.dropbox.com/doc/SI364-Discussion-Section-12-March-26-27-Flask-App-Deployment-on-Heroku--BJwS8cvj~~NgLY2P4NUtpV_VAg-ISMz9JOz4mgwHmg8mbLRJ
 
-# make some edits:
-
-# open corpus and store in db to create all (hmm)
-# use db to access data? (TBD)
+# work on ensuring a poem can load online
 # tbd on using db to permalink (??? careful re: permalink)
 
 # host on heroku w flask (see instrs above)

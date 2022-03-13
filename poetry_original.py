@@ -9,26 +9,27 @@ from typing import List
 ## TODO: in app, modify code and use db fxns to grab the lines? for online use 
 
 
-## Helper functions (largely from aparrish's examples)
+## Helper functions
 
-def save_poetry_corpus_lines():
-    """Depends upon existence of gutenberg-poetry-v001.ndjson.gz,
-    writing this into a text file plainly speeds up db creation later"""
-    all_lines = []
-    for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
-        all_lines.append(json.loads(line.strip()))
-    # json_obj = json.dumps(all_lines)
-    f = open("poetry_corpus_text.txt",'w')
-    # f.write(json_obj)
-    # f.close()
-    lines_text = [l["s"] for l in all_lines]
-    lines_text_full = "\n".join(lines_text)
-    f.write(lines_text_full)
-    f.close()
+# def save_poetry_corpus_lines():
+#     """Depends upon existence of gutenberg-poetry-v001.ndjson.gz,
+#     writing this into a text file plainly speeds up db creation later"""
+#     all_lines = []
+#     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
+#         all_lines.append(json.loads(line.strip()))
+#     # json_obj = json.dumps(all_lines)
+#     f = open("poetry_corpus_text.txt",'w')
+#     # f.write(json_obj)
+#     # f.close()
+#     lines_text = [l["s"] for l in all_lines]
+#     lines_text_full = "\n".join(lines_text)
+#     f.write(lines_text_full)
+#     f.close()
 
 # def generate_poetry_corpus_lines() -> List:
 #     """Returns a list of all lines from Gutenberg poetry corpus
-#     Direct from the ndjson.gz file"""
+#     Direct from the ndjson.gz file
+#     Largely borrowed from Allison Parrish's examples"""
 #     # TODO: do this quicker -- hm
 #     all_lines = []
 #     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
@@ -58,10 +59,6 @@ class Poem:
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
         self.rhyming_part_for_word = pronouncing.rhyming_part(phones)
-
-    # def generate_all_lines(self):
-    #     # self.all_lines = tmp#generate_poetry_corpus_lines()
-    #     self.all_lines = get_poetry_lines()
 
     def generate_rhyming_part_defaultdict(self, min_len, max_len) -> defaultdict:
         """Returns a default dict structure of 
@@ -242,4 +239,4 @@ if __name__ == "__main__":
     # print(p2.__str__())
     # pass
 
-    save_poetry_corpus_lines()
+    # save_poetry_corpus_lines()
