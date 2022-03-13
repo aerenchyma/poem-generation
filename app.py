@@ -6,6 +6,7 @@ from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import logging
 
 # TODO: add static file as necessary
 # Static files CSS
@@ -68,6 +69,9 @@ def db_setup():
         session.add(item)
     session.commit()
 
+def create_poem(word, lines):
+    p = poetry_original.Poem(seed_word=word, lines=lines)
+    return p
 
 
 # Forms
@@ -102,11 +106,14 @@ def index():
     if request.method == "POST":
         # get result from form
         word = form.seed_word.data
+        logging.debug("word input is", word)
         lines = [x.line for x in CorpusLine.query.all()]
         # generate poem and store
-        p = poetry_original.Poem(seed_word=word, lines=lines)
+        p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
+        logging.debug("created poem successfully")
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
+        logging.debug("poem rep:", poem_rep)
         poem_title = p.generate_title()
         # render poem
         return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
@@ -116,27 +123,9 @@ def index():
 
 
 
-####### fully unflasked
-
-# @post('/') # https://buxty.com/b/2013/12/jinja2-templates-and-bottle/
-# def generate_poem():
-#     """Post and generate poem."""
-#     source_word = request.forms.get('source_word')
-#     # TODO deal with input lines from db or st
-#     p = Poem(source_word)
-#     p.generate_poem()
-#     info = {'poem_text':p.full_poem_list, 'poem_title':p.title}
-#     return template('templates/poem.html', info)
-
-# @app.route('')
-
-
 # Error handling
 
-# TODO convert to flask
-# @error(500)
-# def error500(error):
-#     return template('templates/500.html')
+# TODO
 
 
 # Main
