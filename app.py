@@ -45,18 +45,6 @@ class CorpusLine(db.Model):
 # TODO; store/permalink the poems??? tbd
 
 # Set up database if necessary
-
-# def db_setup(): # TODO: redo so that we don't have to do the whole lines thing in generating a poem...
-#     """Assuming db has been created with CorpusLine model, 
-#     fill CorpusLine table with lines from cited corpus"""
-#     all_lines = generate_poetry_corpus_lines()
-#     for l in all_lines:
-#         # Make the dictionary a string
-#         l = json.dumps(l) # lol ugh
-#         item = CorpusLine(line=l)
-#         session.add(item)
-#         # session.commit() 
-#     session.commit() # TODO: is that too much to add at once? prob fine, check
 def db_setup():
     """Assuming db has been created with CorpusLine model,
     and a poetry_corpus_text.txt file exists, 
@@ -70,6 +58,7 @@ def db_setup():
     session.commit()
 
 def create_poem(word, lines):
+    """Use other tooling to create the poem object"""
     p = poetry_original.Poem(seed_word=word, lines=lines)
     return p
 
