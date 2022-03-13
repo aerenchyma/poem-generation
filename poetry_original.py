@@ -5,22 +5,26 @@ import pronouncing
 from collections import defaultdict
 from typing import List
 
+## TODO: create a database with the corpus to put up on digitalocean
+## TODO: in app, modify code and use db fxns to grab the lines? for online use 
+
+
 ## Helper functions (largely from aparrish's examples)
 
-# def save_poetry_corpus_lines():
-#     """Depends upon existence of gutenberg-poetry-v001.ndjson.gz,
-#     writing this into a text file plainly speeds up db creation later"""
-#     all_lines = []
-#     for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
-#         all_lines.append(json.loads(line.strip()))
-#     # json_obj = json.dumps(all_lines)
-#     f = open("poetry_corpus_text.txt",'w')
-#     # f.write(json_obj)
-#     # f.close()
-#     lines_text = [l["s"] for l in all_lines]
-#     lines_text_full = "\n".join(lines_text)
-#     f.write(lines_text_full)
-#     f.close()
+def save_poetry_corpus_lines():
+    """Depends upon existence of gutenberg-poetry-v001.ndjson.gz,
+    writing this into a text file plainly speeds up db creation later"""
+    all_lines = []
+    for line in gzip.open("gutenberg-poetry-v001.ndjson.gz"):
+        all_lines.append(json.loads(line.strip()))
+    # json_obj = json.dumps(all_lines)
+    f = open("poetry_corpus_text.txt",'w')
+    # f.write(json_obj)
+    # f.close()
+    lines_text = [l["s"] for l in all_lines]
+    lines_text_full = "\n".join(lines_text)
+    f.write(lines_text_full)
+    f.close()
 
 # def generate_poetry_corpus_lines() -> List:
 #     """Returns a list of all lines from Gutenberg poetry corpus
@@ -31,7 +35,7 @@ from typing import List
 #         all_lines.append(json.loads(line.strip()))
 #     return all_lines
 
-def get_poetry_lines() -> List:
+def get_poetry_lines() -> List: # Can be what you input for lines in Poem input for local use
     """Assuming you have previously run save_poetry_corpus_lines to save file,
     and then commented it out again -- don't commit the huge txt file"""
     f =  open("poetry_corpus_text.txt",'r')
@@ -45,18 +49,19 @@ def get_poetry_lines() -> List:
 # TODO handle in site
 # TODO trace back what happens and account for it
 class Poem:
-    def __init__(self, seed_word, min_line_len=32):
+    def __init__(self, seed_word, lines, min_line_len=32):
         max_line_choices = [48, 65, 80, 120]
-        self.generate_all_lines()
+        # self.generate_all_lines()
+        self.all_lines = lines # get this list from database
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(max_line_choices))
         # Set up ability to seed by word, TODO neaten
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
         self.rhyming_part_for_word = pronouncing.rhyming_part(phones)
 
-    def generate_all_lines(self):
-        # self.all_lines = tmp#generate_poetry_corpus_lines()
-        self.all_lines = get_poetry_lines()
+    # def generate_all_lines(self):
+    #     # self.all_lines = tmp#generate_poetry_corpus_lines()
+    #     self.all_lines = get_poetry_lines()
 
     def generate_rhyming_part_defaultdict(self, min_len, max_len) -> defaultdict:
         """Returns a default dict structure of 
@@ -206,6 +211,7 @@ class Poem:
         # return f"<h2><i>{self.title}</i></h2><br><br>{poem_rep}<br><br><a href='/'>Try again</a>" # temp/test
 
 
+
 if __name__ == "__main__":
     # import time
     # start_time = time.time()
@@ -227,10 +233,11 @@ if __name__ == "__main__":
     # print(p.__str__())
 
     ## Fun
-    # p = Poem("hi")
+    # lines = get_poetry_lines() # get lines from local file, .gitignored
+    # p = Poem("hi", lines=lines)
     # print("***",p.generate_title(),"***\n\n")
     # print(p.__str__())
-    # p2 = Poem("hi")
+    # p2 = Poem("hi", lines=lines)
     # print("***",p2.generate_title(),"***\n\n")
     # print(p2.__str__())
     # pass
