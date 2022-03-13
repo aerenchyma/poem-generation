@@ -106,7 +106,7 @@ def index():
     if request.method == "POST":
         # get result from form
         word = form.seed_word.data
-        logging.warning("word input is", word)
+        logging.warning(f"word input is {word}")
         print("! print that word input is", word)
         lines = [x.line for x in CorpusLine.query.all()]
         # generate poem and store
@@ -115,7 +115,7 @@ def index():
         print("! print that poem was created successfully")
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
-        logging.warning("poem rep:", poem_rep)
+        logging.warning(f"poem rep: {poem_rep}")
         poem_title = p.generate_title()
         # render poem
         return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
