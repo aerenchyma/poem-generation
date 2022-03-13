@@ -36,10 +36,10 @@ session = db.session
 
 # Models
 
-# class CorpusLine(db.Model):
-#     __tablename__ = "lines"
-#     id = db.Column(db.Integer, primary_key=True)
-#     line = db.Column(db.Text) # Text containing JSON objects, I am very lazy
+class CorpusLine(db.Model):
+    __tablename__ = "lines"
+    id = db.Column(db.Integer, primary_key=True)
+    line = db.Column(db.Text) # Text containing JSON objects, I am very lazy
 
 # TODO; store/permalink the poems??? tbd
 
@@ -56,6 +56,18 @@ session = db.session
 #         session.add(item)
 #         # session.commit() 
 #     session.commit() # TODO: is that too much to add at once? prob fine, check
+def db_setup():
+    """Assuming db has been created with CorpusLine model,
+    and a poetry_corpus_text.txt file exists, 
+    fill CorpusLine table with lines from cited corpus"""
+    f = open("poetry_corpus_text.txt",'r')
+    lines = f.readlines()
+    f.close()
+    for l in lines:
+        item = CorpusLine(line=l)
+        session.add(item)
+    session.commit()
+
 
 
 # Forms
@@ -90,9 +102,9 @@ def index():
     if request.method == "POST":
         # get result from form
         word = form.seed_word.data
-
+        lines = [x.line for x in CorpusLine.query.all()]
         # generate poem and store
-        p = poetry_original.Poem(seed_word=word)
+        p = poetry_original.Poem(seed_word=word, lines=lines)
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
         poem_title = p.generate_title()
@@ -130,20 +142,21 @@ def index():
 # Main
 
 if __name__ == '__main__':
-    # db.create_all() # TODO check ok
+    db.create_all() # TODO check ok
     # If the created database is empty, then fill it with the lines stuff
-    # if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
-    #     db_setup()
+    if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
+        db_setup() # This should only run locally, and then put db on server
+    else:
+        print("Yes, there is content in the LINES table / CorpusLine model!")
 
-    if app.config['HEROKU_ON']:
+    if app.config['HEROKU_ON']: # TODO change this env var for any server
         app.debug = False
         # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
         app.run()
     else:
-        app.debug = False 
+        app.debug = True # for now
         # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
         app.run()
-
 
 
 ####
