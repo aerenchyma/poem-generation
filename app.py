@@ -106,14 +106,16 @@ def index():
     if request.method == "POST":
         # get result from form
         word = form.seed_word.data
-        logging.debug("word input is", word)
+        logging.warning("word input is", word)
+        print("! print that word input is", word)
         lines = [x.line for x in CorpusLine.query.all()]
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
-        logging.debug("created poem successfully")
+        logging.warning("created poem successfully")
+        print("! print that poem was created successfully")
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
-        logging.debug("poem rep:", poem_rep)
+        logging.warning("poem rep:", poem_rep)
         poem_title = p.generate_title()
         # render poem
         return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
