@@ -143,7 +143,7 @@ if __name__ == '__main__':
     #     # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
     #     app.run()
     # else:
-    app.debug = True # for now
+    app.debug = False # for now
     # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
     app.run()
 
