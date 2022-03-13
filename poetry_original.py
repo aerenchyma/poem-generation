@@ -230,13 +230,11 @@ if __name__ == "__main__":
     # print(p.__str__())
 
     ## Fun
-    # lines = get_poetry_lines() # get lines from local file, .gitignored
-    # p = Poem("hi", lines=lines)
-    # print("***",p.generate_title(),"***\n\n")
-    # print(p.__str__())
-    # p2 = Poem("hi", lines=lines)
-    # print("***",p2.generate_title(),"***\n\n")
-    # print(p2.__str__())
-    # pass
-
-    # save_poetry_corpus_lines()
+    lines = get_poetry_lines() # get lines from local file, .gitignored
+    p = Poem("hi", lines=lines)
+    print("***",p.generate_title(),"***\n\n")
+    print(p.__str__())
+    p2 = Poem("hi", lines=lines)
+    print("***",p2.generate_title(),"***\n\n")
+    print(p2.__str__())
+    pass
