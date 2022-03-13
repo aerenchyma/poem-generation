@@ -109,8 +109,7 @@ def index():
         logging.warning(f"word input is {word}")
         print("! print that word input is", word) # NOTE 3/12: we get here, but not to other logging. 
         lines = [x.line for x in CorpusLine.query.all()]
-        import pdb # TODO debug
-        pdb.set_trace() # TODO debug
+        logging.warning(f"first line is {lines[0]}")
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
         logging.warning("created poem successfully")
