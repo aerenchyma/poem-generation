@@ -155,8 +155,9 @@ class Poem:
         else:
             # two random couplets; # TODO: decide if there's a more creative thing here
             # followed by a random line with the word in it
-            # lines_with_word = [line['s'] for line in self.all_lines if re.search(fr"\b{self.seed_word}\b", line['s'], re.I)]
             lines_with_word = [line for line in self.all_lines if self.seed_word in line]
+            if lines_with_word == []: # If there aren't any, sure, choose basically any line
+                lines_with_word = random.sample(self.all_lines,len(self.all_lines)//2) # Grab a list of half the lines that exist TODO more complicated?
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
             # Use Allison's example of grabbing some couplets to grab 2
             for i in range(2):
@@ -168,6 +169,7 @@ class Poem:
             stanza_list.append(self.handle_line_punctuation(random.choice(lines_with_word)))
 
         return stanza_list
+
 
     def generate_poem(self):
 

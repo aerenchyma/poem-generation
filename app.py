@@ -98,7 +98,7 @@ def index():
         logging.warning(f"word input is {word}")
         print("! print that word input is", word) # NOTE 3/12: we get here, but not to other logging. 
         # lines = [x.line for x in CorpusLine.query.all()] # real
-        lines = ["With truth, precision, fancy's claims defines,","In which the spirit baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their Shrines,","Relent, relent! to accomplish such designs","Ha, ha, the wooing o't","I've seed 'em taste like punkins, from the core to the rines,","A realm for mystery made, which undermines","The favourite metres of the T`ang poets were in lines","The rules forbid your wife to pass the lines.","Meanwhile the Lion's care assigns","In a sweet and solemn bond."] # debug
+        lines = ["With truth, precision, girl fancy's claims defines,","In which the spirit girl baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their girl Shrines,","Relent, relent! girls to accomplish such designs","Ha, ha, the wooing o't girl","I've seed 'em taste girls like punkins, from the core to the rines,","A realm for mystery girl made, which undermines","The favourite metres of the girl T`ang poets were in lines","The rules forbid your girl wife to pass the lines.","Meanwhile girl the Lion's care assigns","In a girly sweet and solemn bond."] # debug
         logging.warning(f"first line is {lines[0]}")
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     #     # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
     #     app.run()
     # else:
-    app.debug = False # for now
+    app.debug = True # for now
     # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
     app.run()
 
