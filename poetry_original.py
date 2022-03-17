@@ -50,15 +50,21 @@ def get_poetry_lines() -> List: # Can be what you input for lines in Poem input 
 # TODO handle in site
 # TODO trace back what happens and account for it
 class Poem:
+    max_line_choices = [48, 65, 80, 120]
     def __init__(self, seed_word, lines, min_line_len=32):
-        max_line_choices = [48, 65, 80, 120]
         # self.generate_all_lines()
         self.all_lines = lines # get this list from database
-        self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(max_line_choices))
-        # Set up ability to seed by word, TODO neaten
+        self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(self.max_line_choices))
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
         self.rhyming_part_for_word = pronouncing.rhyming_part(phones)
+
+    def select_relevant_lines(self):
+        """Uses heuristics for which lines from corpus we'll need
+        to filter lines for input
+        TODO: do this in database and not in code?"""
+        pass
+
 
     def generate_rhyming_part_defaultdict(self, min_len, max_len) -> defaultdict:
         """Returns a default dict structure of 
