@@ -72,57 +72,42 @@ class Poem:
         values: defaultdicts,
         of words corresponding to that rhyming part (strs)
         : lists of lines that end with those words (lists of strs)
-        Code borrowed directly from Allison Parrish's examples."""
+        Code borrowed directly from Allison Parrish's examples,
+        edited a bit for silly website reasons."""
         by_rhyming_part = defaultdict(lambda: defaultdict(list))
         for line in self.all_lines:
-            # text = line['s']
-            text = line # TODO? if this work this reassignment isn't nec
-            # Uniform lengths original: if not(32 < len(text) < 48)
-            if not(min_len < len(text) < max_len): # only use lines of uniform lengths
+            # Uniform lengths -- original: if not(32 < len(text) < 48)
+            if not(min_len < len(line) < max_len): # only use lines of uniform lengths
                 continue
-            # match = re.search(r'(\b\w+\b)\W*$', text) # according to cProfile this takes a long time
-            match = text.split()[-1].replace(",","").replace(".","").replace(";","")
-            if len(match) >= 2:
-                # last_word = match.group() # and therefore this would be a problem too
-                last_word = match
+            if line.count(" ") >= 2:
+                last_word = line.split()[-1].strip().rstrip()
                 pronunciations = pronouncing.phones_for_word(last_word)
                 if len(pronunciations) > 0:
                     rhyming_part = pronouncing.rhyming_part(pronunciations[0])
                     # group by rhyming phones (for rhymes) and words (to avoid duplicate words)
-                    by_rhyming_part[rhyming_part][last_word.lower()].append(text)
+                    by_rhyming_part[rhyming_part][last_word.lower()].append(line)
         return by_rhyming_part
 
     def get_random_line(self) -> str:
         """Returns a random line from the poetry corpus"""
-        # lines = [line['s'] for line in self.all_lines]
-        lines = [line for line in self.all_lines]
-        return random.choice(lines) # For example, a string: "And his nerves thrilled like throbbing violins"
+        return random.choice(self.all_lines) 
+        # For example, a string: "And his nerves thrilled like throbbing violins\n"
 
     def handle_line_punctuation(self, line, title=False):
         """Handles line-end punctuation for some fun verse finality"""
         replace_set = ",:;'\""
         maintain_set = "-!?."
+        full_set = replace_set + maintain_set
         if not title:
             if line[-2] in replace_set:
-                return line[:-2]+"\n" #+ "."
+                return line[:-2]+"\n"
             else:
                 return line
-            # elif line[-1] in maintain_set:
-            #     return line
-            # else:
-            #     return line#[:-1] #+ "."
-        else:
-            fixed = ""
-            for ch in line:
-                if ch in replace_set or ch in maintain_set:
-                    continue
-                else:
-                    fixed += ch
+        else: # if it is a title, replace interim punct and return without end punc
+            fixed = line.replace(",","").replace(":","").replace(";","").replace("'","").replace('"','')
+            if fixed[-1] in full_set:
+                return fixed[:-1]
             return fixed
-            # if line[-1].isalpha():
-            #     return line.replace('"','').replace("'","")
-            # else:
-            #     return line[:-1].replace('"','').replace("'","")
         
     def generate_title(self):
         stopwords = ["a","an","the","or","as","of","at","the"] # stopwords that I care about here
