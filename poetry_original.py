@@ -51,9 +51,9 @@ def get_poetry_lines() -> List: # Can be what you input for lines in Poem input 
 # TODO trace back what happens and account for it
 class Poem:
     max_line_choices = [48, 65, 80, 120]
-    def __init__(self, seed_word, lines, min_line_len=32):
+    def __init__(self, seed_word, lines, min_line_len=32, num_lines_sample=250000):
         # self.generate_all_lines()
-        self.all_lines = lines # get this list from database
+        self.all_lines = random.sample(lines, num_lines_sample) # get lines list from database, then get random sample of them
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(self.max_line_choices))
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
@@ -224,10 +224,23 @@ if __name__ == "__main__":
 
     ## Fun
     lines = get_poetry_lines() # get lines from local file, .gitignored
-    p = Poem("hi", lines=lines)
-    print("***",p.generate_title(),"***\n\n")
-    print(p.__str__())
-    p2 = Poem("hi", lines=lines)
-    print("***",p2.generate_title(),"***\n\n")
-    print(p2.__str__())
+    # p = Poem("hi", lines=lines)
+    # print("***",p.generate_title(),"***\n\n")
+    # print(p.__str__())
+    # p2 = Poem("hi", lines=lines)
+    # print("***",p2.generate_title(),"***\n\n")
+    # print(p2.__str__())
+
+    p3 = Poem("girlfriend", lines=lines)#, num_lines_sample=len(lines))
+    print("***",p3.generate_title(),"***\n\n")
+    print(p3)
+
+    p4 = Poem("hi", lines=lines)
+    print("***",p4.generate_title(),"***\n\n")
+    print(p4.__str__())
+
+    p5 = Poem("orange", lines=lines)
+    print("***",p5.generate_title(),"***\n\n")
+    print(p5.__str__())
+
     pass

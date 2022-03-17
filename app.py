@@ -45,7 +45,7 @@ class CorpusLine(db.Model):
 # TODO; store/permalink the poems??? tbd
 
 # Set up database if necessary
-def db_setup():
+def db_setup_lines():
     """Assuming db has been created with CorpusLine model,
     and a poetry_corpus_text.txt file exists, 
     fill CorpusLine table with lines from cited corpus"""
@@ -65,17 +65,6 @@ def create_poem(word, lines):
 
 # Forms
 
-# just example lol
-# class SongForm(FlaskForm):
-#     song = StringField("What is the title of your favorite song?", validators=[Required()])
-#     artist = StringField("What is the name of the artist who performs it?",validators=[Required()])
-#     genre = StringField("What is the genre of that song?", validators
-#         =[Required()])
-#     album = StringField("What is the album this song is on?", validators
-#         =[Required()])
-#     rating = FloatField("What is your rating of this song?", validators = [Required()])
-#     submit = SubmitField('Submit')
-
 class WordForm(FlaskForm):
     seed_word = StringField("Input a word to inspire the poem generator. No spaces or punctuation; unfortunately, it doesn't find those inspirational.", validators=[DataRequired()])
     submit = SubmitField("Create a poem")
@@ -83,11 +72,6 @@ class WordForm(FlaskForm):
 
 
 # Routes
-
-# @get('/') 
-# def poem():
-#     """Home page, form to give the poem creator some inspiration."""
-#     return template('templates/home.html')
 
 @app.route('/',methods=["GET","POST"])
 def index():
@@ -97,8 +81,8 @@ def index():
         word = form.seed_word.data
         logging.warning(f"word input is {word}")
         print("! print that word input is", word) # NOTE 3/12: we get here, but not to other logging. 
-        # lines = [x.line for x in CorpusLine.query.all()] # real
-        lines = ["With truth, precision, girl fancy's claims defines,","In which the spirit girl baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their girl Shrines,","Relent, relent! girls to accomplish such designs","Ha, ha, the wooing o't girl","I've seed 'em taste girls like punkins, from the core to the rines,","A realm for mystery girl made, which undermines","The favourite metres of the girl T`ang poets were in lines","The rules forbid your girl wife to pass the lines.","Meanwhile girl the Lion's care assigns","In a girly sweet and solemn bond."] # debug
+        lines = [x.line for x in CorpusLine.query.all()] # real
+        # lines = ["With truth, precision, girl fancy's claims defines,","In which the spirit girl baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their girl Shrines,","Relent, relent! girls to accomplish such designs","Ha, ha, the wooing o't girl","I've seed 'em taste girls like punkins, from the core to the rines,","A realm for mystery girl made, which undermines","The favourite metres of the girl T`ang poets were in lines","The rules forbid your girl wife to pass the lines.","Meanwhile girl the Lion's care assigns","In a girly sweet and solemn bond."] # debug
         logging.warning(f"first line is {lines[0]}")
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
