@@ -51,7 +51,7 @@ def get_poetry_lines() -> List: # Can be what you input for lines in Poem input 
 # TODO trace back what happens and account for it
 class Poem:
     max_line_choices = [48, 65, 80, 120]
-    def __init__(self, seed_word, lines, min_line_len=32, num_lines_sample=250000):
+    def __init__(self, seed_word, lines, min_line_len=32, num_lines_sample=25000):
         # self.generate_all_lines()
         self.all_lines = random.sample(lines, num_lines_sample) # get lines list from database, then get random sample of them
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(self.max_line_choices))
