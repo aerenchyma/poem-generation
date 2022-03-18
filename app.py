@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import logging
+import random
 
 # TODO: add static file as necessary
 # Static files CSS
