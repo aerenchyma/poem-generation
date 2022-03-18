@@ -24,7 +24,14 @@ app.config['SECRET_KEY'] = 'adgsdfsadfdflsdfsj'
 app.config['HEROKU_ON'] = os.environ.get('HEROKU')
 
 # TODO: configure db stuff / add safe config
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or "postgresql://localhost/poetry_data"
+import os
+import re
+
+uri = os.getenv("DATABASE_URL")
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or "postgresql://localhost/poetry_data"
+app.config['SQLALCHEMY_DATABASE_URL'] = uri
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
