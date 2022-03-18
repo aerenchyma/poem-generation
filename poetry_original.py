@@ -81,17 +81,17 @@ class Poem:
             # Uniform lengths -- original: if not(32 < len(text) < 48)
             if not(min_len < len(line) < max_len): # only use lines of uniform lengths
                 continue
-            if line.count(" ") >= 2:
-                last_word = line.split()[-1].strip().rstrip()
-                pronunciations = pronouncing.phones_for_word(last_word)
-                if len(pronunciations) > 0:
-                    rhyming_part = pronouncing.rhyming_part(pronunciations[0])
-                    # group by rhyming phones (for rhymes) and words (to avoid duplicate words)
-                    by_rhyming_part[rhyming_part][last_word.lower()].append(line)
+            # if line.count(" ") >= 2:
+            last_word = line.split()[-1].strip().rstrip()
+            pronunciations = pronouncing.phones_for_word(last_word)
+            if len(pronunciations) > 0:
+                rhyming_part = pronouncing.rhyming_part(pronunciations[0])
+                # group by rhyming phones (for rhymes) and words (to avoid duplicate words)
+                by_rhyming_part[rhyming_part][last_word.lower()].append(line)
         return by_rhyming_part
 
     def get_random_line(self) -> str:
-        """Returns a random line from the poetry corpus"""
+        """Returns a random line from the set of all lines"""
         item = random.choice(self.all_lines)
         return item.line
         # For example, a string: "And his nerves thrilled like throbbing violins\n"
@@ -150,10 +150,14 @@ class Poem:
         else:
             # two random couplets; # TODO: decide if there's a more creative thing here
             # followed by a random line with the word in it
-            lines_with_word = [line for line in self.all_lines if self.seed_word in line.line]
-            # lines_with_word = CorpusLine.query.filter_by(self.seed_word in line) # if in app, same in gen_title, but this isn't now
-            if lines_with_word == []: # If there aren't any, sure, choose basically any line
-                lines_with_word = random.sample(self.all_lines,len(self.all_lines)//2) # Grab a list of half the lines that exist TODO more complicated?
+
+            # ### in a world where we only use lines with word or subset of word, don't need this
+            # lines_with_word = [line for line in self.all_lines if self.seed_word in line.line]
+            # # lines_with_word = CorpusLine.query.filter_by(self.seed_word in line) # if in app, same in gen_title, but this isn't now
+            # if lines_with_word == []: # If there aren't any, sure, choose basically any line
+            #     lines_with_word = random.sample(self.all_lines,len(self.all_lines)//2) # Grab a list of half the lines that exist TODO more complicated?
+            # ######
+            
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
             # Use Allison's example of grabbing some couplets to grab 2
             for i in range(2):
@@ -162,7 +166,7 @@ class Poem:
                 stanza_list.append(random.choice(group[words[0]]))
                 stanza_list.append(random.choice(group[words[1]]))
             # Then append a random line with the seed word
-            stanza_list.append(self.handle_line_punctuation(random.choice(lines_with_word)))
+            stanza_list.append(self.handle_line_punctuation(random.choice(self.all_lines))) # or lines_with_word instead of self.all_lines
 
         return stanza_list
 
