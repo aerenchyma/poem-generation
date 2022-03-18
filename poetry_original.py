@@ -52,7 +52,9 @@ class Poem:
     max_line_choices = [48, 65, 80, 120]
     def __init__(self, seed_word, lines, min_line_len=32, num_lines_sample=25000):
         # self.generate_all_lines()
-        self.all_lines = random.sample(lines, num_lines_sample) # get lines list from database, then get random sample of them
+        self.all_lines = lines#random.sample(lines, num_lines_sample) # get lines list from database, then get random sample of them
+        random_line = self.get_random_line()
+        print(random_line)
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(self.max_line_choices))
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
@@ -74,7 +76,8 @@ class Poem:
         Code borrowed directly from Allison Parrish's examples,
         edited a bit for silly website reasons."""
         by_rhyming_part = defaultdict(lambda: defaultdict(list))
-        for line in self.all_lines:
+        for l in self.all_lines:
+            line = l.line
             # Uniform lengths -- original: if not(32 < len(text) < 48)
             if not(min_len < len(line) < max_len): # only use lines of uniform lengths
                 continue
@@ -89,7 +92,8 @@ class Poem:
 
     def get_random_line(self) -> str:
         """Returns a random line from the poetry corpus"""
-        return random.choice(self.all_lines) 
+        item = random.choice(self.all_lines)
+        return item.line
         # For example, a string: "And his nerves thrilled like throbbing violins\n"
 
     def handle_line_punctuation(self, line, title=False):
@@ -111,8 +115,9 @@ class Poem:
     def generate_title(self):
         stopwords = ["a","an","the","or","as","of","at","the"] # stopwords that I care about here
         # lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
-        lines_with_the = [line for line in self.all_lines if "the" in line]
-        title = self.handle_line_punctuation(random.choice(lines_with_the), title=True)
+        lines_with_the = [line for line in self.all_lines if "the" in line.line]
+        # print(lines_with_the[1].line)
+        title = self.handle_line_punctuation(random.choice(lines_with_the).line, title=True)
         title_list = title.split()
         if title_list[-2] in stopwords and title_list[-1] in stopwords:
             self.title = " ".join(title_list[:-2])
@@ -145,7 +150,8 @@ class Poem:
         else:
             # two random couplets; # TODO: decide if there's a more creative thing here
             # followed by a random line with the word in it
-            lines_with_word = [line for line in self.all_lines if self.seed_word in line]
+            lines_with_word = [line for line in self.all_lines if self.seed_word in line.line]
+            # lines_with_word = CorpusLine.query.filter_by(self.seed_word in line) # if in app, same in gen_title, but this isn't now
             if lines_with_word == []: # If there aren't any, sure, choose basically any line
                 lines_with_word = random.sample(self.all_lines,len(self.all_lines)//2) # Grab a list of half the lines that exist TODO more complicated?
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
