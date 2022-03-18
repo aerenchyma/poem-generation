@@ -92,8 +92,10 @@ class Poem:
 
     def get_random_line(self) -> str:
         """Returns a random line from the set of all lines"""
-        item = random.choice(self.all_lines)
-        return item.line
+        # item = random.choice(self.all_lines)
+        # return item.line
+        ri = random.randint(0,get_count(self.all_lines))
+        return self.all_lines.filter_by(id=ri)
         # For example, a string: "And his nerves thrilled like throbbing violins\n"
 
     def handle_line_punctuation(self, line, title=False):
