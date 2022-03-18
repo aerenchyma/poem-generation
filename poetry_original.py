@@ -157,6 +157,7 @@ class Poem:
             # if lines_with_word == []: # If there aren't any, sure, choose basically any line
             #     lines_with_word = random.sample(self.all_lines,len(self.all_lines)//2) # Grab a list of half the lines that exist TODO more complicated?
             # ######
+            # TODO: should do this filter in db, not here, if used
             
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
             # Use Allison's example of grabbing some couplets to grab 2
@@ -166,7 +167,9 @@ class Poem:
                 stanza_list.append(random.choice(group[words[0]]))
                 stanza_list.append(random.choice(group[words[1]]))
             # Then append a random line with the seed word
-            stanza_list.append(self.handle_line_punctuation(random.choice(self.all_lines))) # or lines_with_word instead of self.all_lines
+            ri = random.randint(0,get_count(self.all_lines))
+            stanza_list_append(self.handle_line_punctuation(self.all_lines.filter_by(id=ri)))
+            # stanza_list.append(self.handle_line_punctuation(random.choice(self.all_lines))) # or lines_with_word instead of self.all_lines
 
         return stanza_list
 

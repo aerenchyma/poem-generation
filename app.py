@@ -69,6 +69,11 @@ def create_poem(word, lines):
     p = poetry_original.Poem(seed_word=word, lines=lines)
     return p
 
+def get_count(q):
+    count_q = q.statement.with_only_columns([func.count()]).order_by(None)
+    count = q.session.execute(count_q).scalar()
+    return count
+
 
 # Forms
 
@@ -89,7 +94,8 @@ def index():
         logging.warning(f"word input is {word}")
         print("! print that word input is", word) 
         # lines = random.sample(CorpusLine.query.all(), 25000) # attempt - access line via attr
-        lines = CorpusLine.query.filter(CorpusLine.line.contains(word)).all()
+        lines = CorpusLine.query() # all, in query form
+        # lines = CorpusLine.query.filter(CorpusLine.line.contains(word))
         # lines = [x.line for x in CorpusLine.query.all()] # real - but maybe too O(n)
         # lines = ["With truth, precision, girl fancy's claims defines,","In which the spirit girl baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their girl Shrines,","Relent, relent! girls to accomplish such designs","Ha, ha, the wooing o't girl","I've seed 'em taste girls like punkins, from the core to the rines,","A realm for mystery girl made, which undermines","The favourite metres of the girl T`ang poets were in lines","The rules forbid your girl wife to pass the lines.","Meanwhile girl the Lion's care assigns","In a girly sweet and solemn bond."] # debug
         logging.warning("lines acquired")
