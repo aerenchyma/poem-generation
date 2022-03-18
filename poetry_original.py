@@ -46,7 +46,6 @@ def get_poetry_lines() -> List: # Can be what you input for lines in Poem input 
 
 
 #####
-# Note: doesn't work with "girlfriend", list out of range, 
 # TODO handle in site
 # TODO trace back what happens and account for it
 class Poem:
