@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import logging
 import random
+from app import get_count
 
 # TODO: add static file as necessary
 # Static files CSS
