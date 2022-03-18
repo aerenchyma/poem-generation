@@ -81,17 +81,19 @@ def index():
         word = form.seed_word.data
         logging.warning(f"word input is {word}")
         print("! print that word input is", word) # NOTE 3/12: we get here, but not to other logging. 
-        lines = [x.line for x in CorpusLine.query.all()] # real
+        lines = CorpusLine.query.all() # attempt - access line via attr
+        # lines = [x.line for x in CorpusLine.query.all()] # real - but maybe too O(n)
         # lines = ["With truth, precision, girl fancy's claims defines,","In which the spirit girl baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their girl Shrines,","Relent, relent! girls to accomplish such designs","Ha, ha, the wooing o't girl","I've seed 'em taste girls like punkins, from the core to the rines,","A realm for mystery girl made, which undermines","The favourite metres of the girl T`ang poets were in lines","The rules forbid your girl wife to pass the lines.","Meanwhile girl the Lion's care assigns","In a girly sweet and solemn bond."] # debug
-        logging.warning(f"first line is {lines[0]}")
+        logging.warning("lines acquired")
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
         logging.warning("created poem successfully")
         print("! print that poem was created successfully")
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
-        logging.warning(f"poem rep: {poem_rep}")
+        # logging.warning(f"poem rep generated")
         poem_title = p.generate_title()
+        logging.warning("poem rep and title generated")
         # render poem
         return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
         # TODO? save poem and whatever (later)
