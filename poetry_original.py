@@ -44,6 +44,11 @@ def get_poetry_lines() -> List: # Can be what you input for lines in Poem input 
     f.close()
     return lines
 
+def get_count(q):
+    count_q = q.statement.with_only_columns([func.count()]).order_by(None)
+    count = q.session.execute(count_q).scalar()
+    return count
+
 
 #####
 # TODO handle in site

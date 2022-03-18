@@ -8,7 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import logging
 import random
-from app import get_count
 
 # TODO: add static file as necessary
 # Static files CSS
@@ -69,11 +68,6 @@ def create_poem(word, lines):
     """Use other tooling to create the poem object"""
     p = poetry_original.Poem(seed_word=word, lines=lines)
     return p
-
-def get_count(q):
-    count_q = q.statement.with_only_columns([func.count()]).order_by(None)
-    count = q.session.execute(count_q).scalar()
-    return count
 
 
 # Forms
