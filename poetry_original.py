@@ -97,10 +97,10 @@ class Poem:
 
     def get_random_line(self) -> str:
         """Returns a random line from the set of all lines"""
-        # item = random.choice(self.all_lines)
-        # return item.line
-        ri = random.randint(0,get_count(self.all_lines))
-        return self.all_lines.filter_by(id=ri)
+        item = random.choice(self.all_lines)
+        return item.line
+        # ri = random.randint(0,get_count(self.all_lines))
+        # return self.all_lines.filter_by(id=ri)
         # For example, a string: "And his nerves thrilled like throbbing violins\n"
 
     def handle_line_punctuation(self, line, title=False):
@@ -174,8 +174,9 @@ class Poem:
                 stanza_list.append(random.choice(group[words[0]]))
                 stanza_list.append(random.choice(group[words[1]]))
             # Then append a random line with the seed word
-            ri = random.randint(0,get_count(self.all_lines))
-            stanza_list_append(self.handle_line_punctuation(self.all_lines.filter_by(id=ri)))
+            stanza_list.append(self.handle_line_punctuation(self.get_random_line()))
+            # ri = random.randint(0,get_count(self.all_lines))
+            # stanza_list.append(self.handle_line_punctuation(self.all_lines.filter_by(id=ri)))
             # stanza_list.append(self.handle_line_punctuation(random.choice(self.all_lines))) # or lines_with_word instead of self.all_lines
 
         return stanza_list
