@@ -139,7 +139,7 @@ class Poem:
         replace_set = ",:;'\"}]{["
         maintain_set = "-!?."
         full_set = replace_set + maintain_set
-        line = re.sub('\,|\?|\.|\!|\/|\;|\:|\\|\"|\}|\{|\[|\]', '', line)
+        line = re.sub('\,|\?|\.|\!|\/|\;|\:|\\|\"|\}|\{|\[|\]|\(|\)', '', line)
         if not title:
             if line[-2] in replace_set:
                 return line[:-2]+"\n"
