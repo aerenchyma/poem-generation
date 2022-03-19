@@ -133,21 +133,22 @@ class Poem:
         # return self.all_lines.filter_by(id=ri)
         # For example, a string: "And his nerves thrilled like throbbing violins\n"
 
-    def handle_line_punctuation(self, line, title=False):
+    def handle_line_punctuation(self, line, title=False): # Expect line to be a CorpusLine object
         """Handles line-end punctuation for some fun verse finality"""
-        replace_set = ",:;'\""
+        line = line.line
+        replace_set = ",:;'\"}]{["
         maintain_set = "-!?."
         full_set = replace_set + maintain_set
         if not title:
-            if line.line[-2] in replace_set:
-                return line.line[:-2]+"\n"
+            if line[-2] in replace_set:
+                return line[:-2]+"\n"
             else:
-                return line.line
+                return line
         else: # if it is a title, replace interim punct and return without end punc
-            fixed = line.line.replace(",","").replace(":","").replace(";","").replace("'","").replace('"','')
-            if fixed[-1] in full_set:
-                return fixed[:-1]
-            return fixed
+            fixed = line.replace(",","").replace(":","").replace(";","").replace("'","").replace('"','').replace("}","").replace("{","").replace("[","").replace("]","")
+            if fixed[-2] in full_set:
+                return fixed[:-2]
+            return fixed.strip()
         
     def generate_title(self):
         stopwords = ["a","an","the","or","as","of","at","the"] # stopwords that I care about here
