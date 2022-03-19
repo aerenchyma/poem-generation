@@ -146,8 +146,8 @@ class Poem:
                 return line
         else: # if it is a title, replace interim punct and return without end punc
             fixed = line.replace(",","").replace(":","").replace(";","").replace("'","").replace('"','').replace("}","").replace("{","").replace("[","").replace("]","")
-            if fixed[-2] in full_set:
-                return fixed[:-1]
+            # if fixed[-2] in full_set:
+            #     return fixed[:-1]
             return fixed.strip()
         
     def generate_title(self):
