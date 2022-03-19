@@ -58,6 +58,8 @@ class CorpusLine(db.Model):
 
 # TODO; store/permalink the poems??? tbd
 
+# TODO: store the words that are searched? maybe maybe not
+
 # Set up database if necessary
 # def db_setup_lines():
 #     """Assuming db has been created with CorpusLine model,
@@ -72,19 +74,6 @@ class CorpusLine(db.Model):
 #     session.commit()
 
 ### Support code for poem creation
-
-# def get_poetry_lines() -> List: # Can be what you input for lines in Poem input for local use
-#     """Assuming you have previously run save_poetry_corpus_lines to save file,
-#     and then commented it out again -- don't commit the huge txt file"""
-#     f =  open("poetry_corpus_text.txt",'r')
-#     lines = f.readlines()
-#     f.close()
-#     return lines
-
-# def get_count(q):
-#     count_q = q.statement.with_only_columns([func.count()]).order_by(None)
-#     count = q.session.execute(count_q).scalar()
-#     return count
 
 def random_line_from_db(model):
     """Expects model to have element line -> a string"""
@@ -202,9 +191,9 @@ class Poem:
 
             # ### in a world where we only use lines with word or subset of word, don't need this
             # lines_with_word = [line for line in self.all_lines if self.seed_word in line.line]
-            # # lines_with_word = CorpusLine.query.filter_by(self.seed_word in line) # if in app, same in gen_title, but this isn't now
-            # if lines_with_word == []: # If there aren't any, sure, choose basically any line
-            #     lines_with_word = random.sample(self.all_lines,len(self.all_lines)//2) # Grab a list of half the lines that exist TODO more complicated?
+            lines_with_word = CorpusLine.query.filter(CorpusLine.line.contains(self.seed_word)) # if in app, same in gen_title, but this isn't now
+            if lines_with_word == []: # If there aren't any, sure, choose basically any line
+                lines_with_word = lines # Grab a list of half the lines that exist TODO more complicated?
             # ######
             # TODO: should do this filter in db, not here, if used
             
@@ -216,10 +205,8 @@ class Poem:
                 stanza_list.append(random.choice(group[words[0]]))
                 stanza_list.append(random.choice(group[words[1]]))
             # Then append a random line with the seed word
-            stanza_list.append(self.handle_line_punctuation(random_line_from_db(CorpusLine)))#(self.get_random_line()))
-            # ri = random.randint(0,get_count(self.all_lines))
-            # stanza_list.append(self.handle_line_punctuation(self.all_lines.filter_by(id=ri)))
-            # stanza_list.append(self.handle_line_punctuation(random.choice(self.all_lines))) # or lines_with_word instead of self.all_lines
+            stanza_list.append(self.handle_line_punctuation(random_line_from_db(CorpusLine)))
+            # stanza_list.append(self.handle_line_punctuation(CorpusLine.query.filter(CorpusLine.line.contains(self.seed_word)).order_by(func.random()).first()))
 
         return stanza_list
 
@@ -234,12 +221,6 @@ class Poem:
 
         # Now: controlling len of stanza and such, but always doing 3
         # TODO: input to control how many stanzas, or some element of randomness?
-        # self.full_poem += "\n".join(self.generate_stanza())
-        # self.full_poem += "\n\n"
-        # self.full_poem += "\n".join(self.generate_stanza())
-        # self.full_poem += "\n\n"
-        # self.full_poem += "\n".join(self.generate_stanza())
-        # self.full_poem_list = self.full_poem.split("\n")
         self.full_poem += "".join(self.generate_stanza())
         self.full_poem += "\n"
         self.full_poem += "".join(self.generate_stanza())
@@ -287,23 +268,16 @@ def index():
     if request.method == "POST":
         # get result from form
         word = form.seed_word.data
-        logging.warning(f"word input is {word}")
-        print("! print that word input is", word) 
-        # lines = random.sample(CorpusLine.query.all(), 25000) # attempt - access line via attr
-        # lines = CorpusLine.query.filter(CorpusLine.line.contains(random.choice(list("abcdefghijklmnopqrstuwy"))))
+        logging.info(f"word input is {word}")
         lines = CorpusLine.query.order_by(func.random()).limit(200000)
-        # lines = [x.line for x in CorpusLine.query.all()] # real - but maybe too O(n)
-        # lines = ["With truth, precision, girl fancy's claims defines,","In which the spirit girl baskingly reclines,","Of the impending eighty thousand lines.","Within his Sanctuary it self their girl Shrines,","Relent, relent! girls to accomplish such designs","Ha, ha, the wooing o't girl","I've seed 'em taste girls like punkins, from the core to the rines,","A realm for mystery girl made, which undermines","The favourite metres of the girl T`ang poets were in lines","The rules forbid your girl wife to pass the lines.","Meanwhile girl the Lion's care assigns","In a girly sweet and solemn bond."] # debug
-        logging.warning("lines acquired")
+        logging.info("lines acquired")
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
-        logging.warning("created poem successfully")
-        print("! print that poem was created successfully")
+        logging.info("created poem successfully")
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
-        # logging.warning(f"poem rep generated")
         poem_title = p.generate_title()
-        logging.warning("poem rep and title generated")
+        logging.info("poem rep and title generated")
         # render poem
         return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
         # TODO? save poem and whatever (later)
