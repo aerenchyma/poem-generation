@@ -122,7 +122,7 @@ class Poem:
         Code borrowed directly from Allison Parrish's examples,
         edited a bit for silly website reasons."""
         by_rhyming_part = defaultdict(lambda: defaultdict(list))
-        for l in self.all_lines:
+        for l in iter(self.all_lines):
             line = l.line
             # Uniform lengths -- original: if not(32 < len(text) < 48)
             if not(min_len < len(line) < max_len): # only use lines of uniform lengths
