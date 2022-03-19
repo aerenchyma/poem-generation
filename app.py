@@ -29,9 +29,8 @@ app.config['HEROKU_ON'] = os.environ.get('HEROKU')
 uri = os.environ.get("DATABASE_URL")
 if uri and uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://")
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or "postgresql://localhost/poetry_data"
-app.config['SQLALCHEMY_DATABASE_URL'] = uri
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
+app.config['SQLALCHEMY_DATABASE_URI'] = uri or "postgresql://localhost/poetry_data"
+# app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

@@ -4,6 +4,7 @@ import random
 import pronouncing
 from collections import defaultdict
 from typing import List
+from app import CorpusLine
 
 ## TODO: create a database with the corpus to put up on digitalocean
 ## TODO: in app, modify code and use db fxns to grab the lines? for online use 
@@ -49,6 +50,11 @@ def get_count(q):
     count = q.session.execute(count_q).scalar()
     return count
 
+def random_line_from_db(model):
+    """Expects model to have element line -> a string"""
+    from sqlalchemy import func
+    r_line = model.query.order_by(func.random()).first()
+    return r_line
 
 #####
 # TODO handle in site
@@ -58,8 +64,8 @@ class Poem:
     def __init__(self, seed_word, lines, min_line_len=32, num_lines_sample=25000):
         # self.generate_all_lines()
         self.all_lines = lines#random.sample(lines, num_lines_sample) # get lines list from database, then get random sample of them
-        random_line = self.get_random_line()
-        print(random_line)
+        random_line = random_line_from_db(CorpusLine)
+        print(random_line) # debug
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(self.max_line_choices))
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
@@ -109,12 +115,12 @@ class Poem:
         maintain_set = "-!?."
         full_set = replace_set + maintain_set
         if not title:
-            if line[-2] in replace_set:
+            if line.line[-2] in replace_set:
                 return line[:-2]+"\n"
             else:
-                return line
+                return line.line
         else: # if it is a title, replace interim punct and return without end punc
-            fixed = line.replace(",","").replace(":","").replace(";","").replace("'","").replace('"','')
+            fixed = line.line.replace(",","").replace(":","").replace(";","").replace("'","").replace('"','')
             if fixed[-1] in full_set:
                 return fixed[:-1]
             return fixed
@@ -124,7 +130,7 @@ class Poem:
         # lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
         lines_with_the = [line for line in self.all_lines if "the" in line.line]
         # print(lines_with_the[1].line)
-        title = self.handle_line_punctuation(random.choice(lines_with_the).line, title=True)
+        title = self.handle_line_punctuation(random.choice(lines_with_the), title=True)
         title_list = title.split()
         if title_list[-2] in stopwords and title_list[-1] in stopwords:
             self.title = " ".join(title_list[:-2])
@@ -150,7 +156,7 @@ class Poem:
             for k in rhyming_options:
                 stanza_list.append(random.choice(rhyme_options_source[k]))
             # Then follow with a (random) other line.
-            random_line = self.get_random_line()
+            random_line = random_line_from_db(CorpusLine) #self.get_random_line()
             stanza_list.append(self.handle_line_punctuation(random_line))
 
         # But if there aren't, 
@@ -174,7 +180,7 @@ class Poem:
                 stanza_list.append(random.choice(group[words[0]]))
                 stanza_list.append(random.choice(group[words[1]]))
             # Then append a random line with the seed word
-            stanza_list.append(self.handle_line_punctuation(self.get_random_line()))
+            stanza_list.append(self.handle_line_punctuation(random_line_from_db(CorpusLine)))#(self.get_random_line()))
             # ri = random.randint(0,get_count(self.all_lines))
             # stanza_list.append(self.handle_line_punctuation(self.all_lines.filter_by(id=ri)))
             # stanza_list.append(self.handle_line_punctuation(random.choice(self.all_lines))) # or lines_with_word instead of self.all_lines
