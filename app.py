@@ -279,10 +279,10 @@ def index():
         poem_title = p.generate_title()
         logging.info("poem rep and title generated")
         # render poem
-        return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
+        return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form, seed_word=False)
         # TODO? save poem and whatever (later)
     else:
-        return render_template('home.html',form=form) 
+        return render_template('home.html',form=form,seed_word=True) 
 
 
 
