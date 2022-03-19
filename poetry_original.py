@@ -116,7 +116,7 @@ class Poem:
         full_set = replace_set + maintain_set
         if not title:
             if line.line[-2] in replace_set:
-                return line[:-2]+"\n"
+                return line.line[:-2]+"\n"
             else:
                 return line.line
         else: # if it is a title, replace interim punct and return without end punc
