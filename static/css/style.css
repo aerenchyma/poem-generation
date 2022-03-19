@@ -218,6 +218,27 @@ body {
     font-size: 1.5rem;
     color: rgb(120, 120, 120);
   }
+
+  .back-button {
+    background-color: #324840;
+    color: rgb(164, 157, 157);
+    size:200px;
+    margin-top: 10%;
+    margin-left:20%;
+    padding-left:3%;
+    padding-right:3%;
+    padding-bottom:1%;
+    padding-top:1%;
+  }
+  
+  .round {
+    border-radius: 15%;
+  }
+
+  .info-click {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+  }
   
   pre {
     background: rgb(240, 240, 240);
