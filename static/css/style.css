@@ -5,130 +5,19 @@ body {
     background-color: #d9d5b6;
   }
   
-  /** Borrowed from Liza Daly **/
 
-  /** Nav and footer **/
-  
-  header.top,
-  footer {
-    /* background: url(images/overlay.webp), url(images/banner.webp); */
-    color: #d9d5b6;
-    min-height: 10vh;
-  }
-  header.top li {
-    font-size: 1rem;
-  }
-  header.top nav a.active {
-    color: rgb(255, 234, 0);
-  }
-  
-  header ol,
-  footer ol {
-    margin: 0;
-    list-style-type: none;
-  }
+  /** Header, footer **/
+
   header {
     font-family: "Roboto Condensed", serif;
   }
-  nav a {
-    text-decoration: none;
-  }
-  article nav a.active {
-    font-style: italic;
-    text-decoration: none;
-  }
-  nav ol {
-    padding: 1rem 0;
-  }
-  
-  header nav:first-of-type ol li:first-of-type {
-    font-size: 2rem;
-  }
-  header nav:first-of-type ol,
   footer ol {
     display: grid;
     grid-template-columns: 4fr 1fr 1fr 1fr;
     margin: 0 15vw;
   }
-  /* Top subnav */
   
-  header.top nav:nth-child(2) ol {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    margin: 0 15vw;
-    justify-items: center;
-    background: rgba(255, 255, 255, 0.25);
-    border: 0.5px solid rgba(255, 255, 255, 0.25);
-  }
-  header.top nav:nth-child(2) li {
-    text-align: center;
-    display: inline-block;
-  }
-  
-  .subnav {
-    border: 0.5px solid rgb(218, 218, 218);
-    border-top: none;
-  }
-  .subnav nav {
-    color: rgb(60, 60, 60) !important;
-    margin: 0;
-    padding: 10px;
-    background: none;
-    min-height: initial;
-    text-align: center;
-  }
-  .subnav h4 {
-    margin: 2rem 0 0 0;
-  }
-  
-  .subnav nav ul,
-  .subnav nav li {
-    display: inline-block;
-    margin: 0;
-    padding: 0.5rem 0 0.5rem 0;
-    line-height: 1rem;
-    font-size: 1rem;
-  }
-  
-  .subnav nav li::after {
-    content: " â€¢ ";
-  }
-  .subnav nav li:last-child:after {
-    content: none;
-  }
-  .subnav a {
-    color: teal;
-    text-decoration: underline;
-  }
-  
-  footer ol {
-    padding: 5rem 0 5rem 0;
-  }
-  footer {
-    margin-top: 5rem;
-  }
-  footer li {
-    font-family: "Roboto Condensed", serif;
-  }
-  footer p {
-    margin: 0;
-    padding: 0 0 5vh 0;
-    text-align: center;
-    font-size: 1rem;
-    font-family: "Roboto Condensed", serif;
-  }
-  footer a,
-  nav a {
-    color: whitesmoke;
-  }
-  footer a {
-    text-decoration: underline;
-  }
-  footer {
-    min-height: 15vh;
-  }
-  
-  /** Main body/article */
+  /** Main body of page etc **/
   
   article {
     margin: 0 15vw;
@@ -147,19 +36,26 @@ body {
   .intro p {
     font-size: 1.5rem;
   }
+
+  .poetry {
+    line-height: 1.6em;
+    font-size: 1.2rem;
+    padding-left:20%;
+  }
+
   p {
     line-height: 1.6em;
     font-size: 1.2rem;
   }
   
   a {
-    color: #e86b22;
+    color: #3f6a4c;
   }
   a:hover {
-    color: coral;
+    color: rgb(4, 32, 2);
   }
   
-  /** Content grid **/
+  /** Content grid - inspired by Liza Daly **/
   .grid {
     display: grid;
     padding: 2rem 0 0 0;
@@ -229,21 +125,7 @@ body {
   .first-wide {
     grid-template-columns: 2fr 1fr;
   }
-  
-  @media (min-width: 800px) {
-    .first-wide {
-      grid-template-columns: minmax(600px, 2fr) 1fr;
-    }
-  
-    .fixed-height-medium {
-      grid-template-rows: max-content;
-    }
-    .fixed-height-medium img {
-      height: 400px;
-      object-fit: cover;
-  
-    }
-  }
+
   
   /* Specific section areas */
   
@@ -316,8 +198,9 @@ body {
     font-weight: normal;
   }
   h2 {
-    text-align: center;
-    text-transform: uppercase;
+    padding-left:17%;
+    text-align: left;
+    /* text-transform: uppercase; */
     margin: 5rem 1rem 1rem 1rem;
     font-size: 2rem;
   }
@@ -363,11 +246,8 @@ body {
   blockquote p:first-of-type {
     margin: 0;
   }
-  /* Use for shorter quotations */
-  q {
-    font-style: italic;
-  
-  }
+
+
   .columns {
     columns: 2 auto;
     padding: 1rem 0 0;
@@ -386,53 +266,13 @@ body {
     break-inside: avoid-column;
     font-size: 1.2rem;
   }
-  aside {
-    background: whitesmoke;
-    clear: both;
-    margin: 2rem 0;
-    padding: 1rem;
-  }
+
   .poetry blockquote {
     border: none;
     margin: auto;
     width: 50%;
   }
-  .poetry blockquote:first-of-type {
-    margin-top: 5rem;
-  }
-  .poetry blockquote p {
-    font-style: normal;
-    margin: 1rem 2rem 0 0;
-  }
   
-  .more {
-    display: block;
-    width: fit-content;
-    margin: 1rem 0;
-    color: steelblue;
-    padding-bottom: 0;
-  
-    text-transform: uppercase;
-  }
-  .more:after {
-    content: " â†’";
-  }
-  .more.big {
-    font-size: larger;
-  }
-  figure {
-    margin: 0;
-    padding: 0;
-  }
-  div.img-fluid.float-right figure {
-    padding: 0;
-  }
-  figcaption {
-    text-align: center;
-    font-style: italic;
-    font-size: 16px;
-    padding: 0.5em;
-  }
   .img-small {
     max-width: 30%;
   }
@@ -442,31 +282,12 @@ body {
   .small {
     font-size: smaller;
   }
-  .awards {
-    font-size: smaller;
-    margin: auto;
-    padding: 1em;
-    width: 50%;
-  }
+
   .section-break {
     padding-top: 3em;
     clear: both;
   }
-  
-  .page figure {
-    margin: 2rem auto 3rem auto;
-  }
-  .page figure img {
-    margin: auto;
-    display: block;
-  }
-  
-  .align-right figure {
-    margin: 0;
-  }
-  .align-left figure {
-    margin: 0;
-  }
+
   
   .full-width {
     left: 50%;
@@ -480,151 +301,9 @@ body {
     margin: 0;
   }
   
-  .page figure iframe {
-    margin: auto;
-  }
-  
-  .harmonia h1 {
-    font-family: "Cinzel Decorative", serif;
-    font-size: 5rem;
-  }
-  
-  /* Any short snippet that should have an overflow scroll */
-  .snippet {
-    font-family: "Roboto Condensed", serif;
-    padding: 1rem 1rem 1rem 1.5rem;
-    overflow-y: scroll;
-    height: 30vh;
-    max-width: 60%;
-    background: whitesmoke;
-  }
-  .snippet h3 {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Fascimile for Etidorpha */
-  .fascimile  {
-    font-family: "Roboto Condensed", serif;
-    background: whitesmoke;
-    padding: 1rem 1rem 1rem 1.5rem;
-    overflow-y: scroll;
-    max-height: 90vh;
-    position: relative;
-  
-  }
-  .fascimile::-webkit-scrollbar, .snippet::-webkit-scrollbar  {
-    width: 5px;
-    height: 8px;
-    background-color: darkgrey;
-  }
-  .fascimile::-webkit-scrollbar-thumb, .snippet::-webkit-scrollbar-thumb {
-    background: darkred;
-  }
-  
-  .fascimile p {
-    line-height: 2.4em;
-  }
-  
-  .fascimile del {
-  
-    text-decoration: line-through rgba(20, 20, 20, .25) 5px;
-  }
-  .fascimile ins {
-    transform: translateY(-1.2rem);
-    display: inline-block;
-    position: absolute;
-    text-decoration: none;
-    font-size: smaller;
-    margin-left: -1em;
-  }
-  .fascimile ins.not-inset {
-    transform: none;
-    position: static;
-    margin-left: 0;
-    font-size: inherit;
-  
-  }
-  .fascimile i::before {
-    content: " ^ ";
-    display: inline-block;
-    font-style: normal;
-    font-size: smaller;
-  }
-  
-  .ento {
-    font-family: "Futura", sans-serif;
-    color: rgb(196, 94, 147);
-  }
-  
+
   .license {
   
     margin: 2rem 0;
   }
   
-  @media (max-width: 700px) {
-    article {
-      margin: 0 10vw;
-    }
-  
-    .grid {
-      grid-template-columns: 1fr;
-      justify-items: center;
-    }
-    .grid-three-up {
-      grid-template-columns: 1fr;
-    }
-    .three-row, .three-col {
-      grid-template-columns: 1fr;
-    }
-    .four-row, .four-col {
-      grid-template-columns: 1fr;
-    }
-    .first-wide {
-      grid-template-columns: 1fr;
-    }
-    .intro {
-      grid-template-columns: 1fr;
-    }
-    .essays .grid h3 {
-      font-size: initial;
-    }
-    header.top nav:nth-child(2) ol {
-      grid-template-columns: 1fr 1fr;
-      row-gap: 1rem;
-    }
-    header.top li,
-    footer li {
-      font-size: 12px;
-    }
-    .poetry blockquote p {
-      margin: 0;
-    }
-    .poetry blockquote {
-      width: 90%;
-    }
-    .columns {
-      columns: 1 auto;
-    }
-    .harmonia h1 {
-      font-family: "Cinzel Decorative", serif;
-      font-size: 2rem;
-    }
-    .align-left {
-      float: none;
-      margin: 0 auto;
-      display: block;
-      clear: both;
-    }
-  
-  
-    .align-right {
-      float: none;
-      margin: 0 auto;
-      display: block;
-      clear: both;
-    }
-    .align-right.quarter {
-      max-width: 100% !important;
-    }
-  }
