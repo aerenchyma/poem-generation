@@ -257,7 +257,7 @@ def create_poem(word, lines):
 # Forms
 
 class WordForm(FlaskForm):
-    seed_word = StringField("Input a word to inspire the poem generator. No spaces or punctuation; unfortunately, it doesn't find those inspirational.", validators=[DataRequired()])
+    seed_word = StringField("Input a word to inspire the poem generator. (No spaces or punctuation... it doesn't find those inspirational.)", validators=[DataRequired()])
     submit = SubmitField("Create a poem")
 
 

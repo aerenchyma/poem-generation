@@ -9,24 +9,21 @@
 <title>Poem Generator</title>
 </style>
 </head>
-<body>
+<body class="home-page">
 
 
         <br><br>
         <h1 class="page-title">Stanza Extravaganza</h1>
 
-        <form action="/" method="POST">
-            <p>
-                {{ form.seed_word.label }}<br>
-                {{ form.seed_word() }}
-            </p>
-            <p>{{ form.submit() }}
+        <form class="input-form" action="/" method="POST">
+               <p>{{ form.seed_word.label }}</p>
+               <p id="form-center">{{ form.seed_word() }} {{ form.submit() }}</p>
         </form>
 
 
         <h2 class="subtitle">Please be patient -- art takes time.</h2>
 
-        <p></p><br><br>Code that runs this site can be found <a href='https://github.com/aerenchyma/poem-generation'>here</a> on GitHub.</p>
+        <p class="info-share"><br><br>Code that runs this site can be found <a href='https://github.com/aerenchyma/poem-generation'>here</a> on GitHub.</p>
 
 
 </body>
