@@ -286,6 +286,9 @@ def index():
     else:
         return render_template('home.html',form=form) 
 
+@app.route('/faq')
+def faq():
+    return render_template('poem_generation_faq.html')
 
 
 # Error handling
