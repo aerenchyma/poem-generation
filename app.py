@@ -315,14 +315,17 @@ if __name__ == '__main__':
     # else:
     #     print("Yes, there is content in the LINES table / CorpusLine model!")
 
-    # if app.config['HEROKU_ON']: # TODO change this env var for any server
+    if app.config['HEROKU_ON']: # TODO change this env var for any server
     #     app.debug = False
     #     # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
     #     app.run()
     # else:
-    app.debug = True # for now
-    # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
-    app.run()
+        app.debug = False # for now
+        # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
+        app.run()
+    else:
+        app.debug = True
+        app.run()
 
 
 ####
