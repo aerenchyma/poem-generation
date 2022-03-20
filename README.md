@@ -12,7 +12,7 @@ You can see and interact with it [here](). [TODO link -- working on productional
 
 This is basically a bunch of awesome and fun tools built by [Allison Parrish](https://www.decontextualize.com/), repackaged and amended in various ways for this particular use. Very grateful for the availability of all this cool stuff she's shared.
 
-Also thanks to [Liza Daly](https://lizadaly.com/) who suggested I try NaPoGenMo in the first place.
+Also major thanks to [Liza Daly](https://lizadaly.com/) who suggested I try NaPoGenMo in the first place.
 
 Highly recommend checking out both their work. Both of them remind me why I like computers. 
 
