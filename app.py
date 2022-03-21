@@ -259,7 +259,7 @@ def index():
         # get result from form
         word = form.seed_word.data
         logging.info(f"word input is {word}")
-        lines = CorpusLine.query.order_by(func.random()).limit(375000) # TODO: modify amount
+        lines = CorpusLine.query.order_by(func.random()).limit(300000) # TODO: modify amount
         logging.info("lines acquired")
         # generate poem and store
         p = create_poem(word=word, lines=lines) # TODO possible queue
