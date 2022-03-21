@@ -85,11 +85,8 @@ def random_line_from_db(model):
 # TODO trace back what happens and account for it
 class Poem:
     max_line_choices = [48, 65, 80, 120]
-    def __init__(self, seed_word, lines, min_line_len=32, num_lines_sample=25000):
-        # self.generate_all_lines()
-        self.all_lines = lines#random.sample(lines, num_lines_sample) # get lines list from database, then get random sample of them
-        # random_line = random_line_from_db(CorpusLine) # debug
-        # print(random_line) # debug
+    def __init__(self, seed_word, lines, min_line_len=32):
+        self.all_lines = lines
         self.by_rhyming_part = self.generate_rhyming_part_defaultdict(min_line_len,random.choice(self.max_line_choices))
         self.seed_word = seed_word.lower()
         phones = pronouncing.phones_for_word(self.seed_word)[0]
@@ -190,14 +187,9 @@ class Poem:
         else:
             # two random couplets; # TODO: decide if there's a more creative thing here
             # followed by a random line with the word in it
-
-            # ### in a world where we only use lines with word or subset of word, don't need this
-            # lines_with_word = [line for line in self.all_lines if self.seed_word in line.line]
             lines_with_word = CorpusLine.query.filter(CorpusLine.line.contains(self.seed_word)) # if in app, same in gen_title, but this isn't now
             if lines_with_word == []: # If there aren't any, sure, choose basically any line
                 lines_with_word = lines # Grab a list of half the lines that exist TODO more complicated?
-            # ######
-            # TODO: should do this filter in db, not here, if used
             
             rhyme_groups = [group for group in self.by_rhyming_part.values() if len(group) >= 2]
             # Use Allison's example of grabbing some couplets to grab 2
@@ -230,7 +222,6 @@ class Poem:
         self.full_poem += "".join(self.generate_stanza())
         self.full_poem_list = self.full_poem.split("\n")
         return self.full_poem
-        # return self.full_poem.split("\n") # debug
 
     def __str__(self):
         """Returns the string of the poem"""
@@ -243,8 +234,6 @@ class Poem:
         poem_rep = self.full_poem.split("\n")
         self.site_rep_text = poem_rep # list of lines
         return self.site_rep_text
-        # return f"<h2><i>{self.title}</i></h2><br><br>{poem_rep}<br><br><a href='/'>Try again</a>" # temp/test
-
 
 ### End support code from poetry_original
 
@@ -271,10 +260,10 @@ def index():
         # get result from form
         word = form.seed_word.data
         logging.info(f"word input is {word}")
-        lines = CorpusLine.query.order_by(func.random()).limit(200000)
+        lines = CorpusLine.query.order_by(func.random()).limit(200000) # TODO: modify amount
         logging.info("lines acquired")
         # generate poem and store
-        p = create_poem(word=word, lines=lines) # TODO make this a diff thread or background task?
+        p = create_poem(word=word, lines=lines) # TODO possible queue
         logging.info("created poem successfully")
         # get site-rep of poem, awk but i'm lazy
         poem_rep = p.poem_site_rep()
@@ -282,7 +271,7 @@ def index():
         logging.info("poem rep and title generated")
         # render poem
         return render_template('poem.html',poem_text=poem_rep, poem_title=poem_title, form=form)
-        # TODO? save poem and whatever (later)
+        # TODO? save poem and whatever (later maybe)
     else:
         return render_template('home.html',form=form) 
 
@@ -295,47 +284,23 @@ def faq():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
 @app.errorhandler(403)
 def permission_denied(e):
-    # note that we set the status explicitly
     return render_template('403.html'), 403
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    # note that we set the status explicitly
     return render_template('500.html'), 500
 
 # Main
 
 if __name__ == '__main__':
-    # db.create_all() # TODO check ok
-    # If the created database is empty, then fill it with the lines stuff
-    # if not CorpusLine.query.all(): # assuming no contents is falsey, TODO check
-    #     db_setup() # This should only run locally, and then put db on server
-    # else:
-    #     print("Yes, there is content in the LINES table / CorpusLine model!")
 
     if app.config['HEROKU_ON']: # TODO change this env var for any server
-    #     app.debug = False
-    #     # run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) # TODO ensure right for flask
-    #     app.run()
-    # else:
         app.debug = False # for now
-        # run(host='localhost', port=8080, debug=True) # TODO ensure right for Flask
         app.run()
     else:
         app.debug = True
         app.run()
-
-
-####
-
-# TODO: 
-
-# work on ensuring a poem can load online
-# tbd on using db to permalink (??? careful re: permalink)
-
-# host on heroku w flask (see instrs above)
