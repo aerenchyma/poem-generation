@@ -144,10 +144,18 @@ body {
   }
   
   a {
-    color: #3f6a4c;
+    color: #70a24c;
   }
   a:hover {
-    color: rgb(4, 32, 2);
+    color: rgb(15, 106, 8);
+  }
+  
+  .question {
+    font-weight:bolder;
+  }
+
+  .answer {
+    font-style:italic;
   }
   
   /** Content grid - inspired by Liza Daly **/
