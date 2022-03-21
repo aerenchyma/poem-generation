@@ -151,8 +151,7 @@ class Poem:
     def generate_title(self):
         stopwords = ["a","an","the","or","as","of","at","the"] # stopwords that I care about here
         # lines_with_the = [line['s'] for line in self.all_lines if re.search(r"\bthe\b", line['s'], re.I)]
-        lines_with_the = CorpusLine.query.filter(CorpusLine.line.contains("the"))#([line for line in self.all_lines if "the" in line.line]
-        # print(lines_with_the[1].line)
+        lines_with_the = CorpusLine.query.filter(CorpusLine.line.contains("the"))
         random_line_with_the = CorpusLine.query.filter(CorpusLine.line.contains("the")).order_by(func.random()).first()
         title = self.handle_line_punctuation(random_line_with_the, title=True)
         title_list = title.split()
