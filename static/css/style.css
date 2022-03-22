@@ -1,0 +1,392 @@
+body {
+    font-family: "Source Serif Pro", serif;
+    margin: 0;
+    padding: 0;
+  }
+
+.poem-page {
+  background-color: #d9d5b6;
+  color: rgb(60, 60, 60);
+}
+
+.home-page {
+  color: #d9d5b6;
+  background-color: rgb(60, 60, 60);
+}
+
+.error-page {
+  margin: 5rem 5rem 5rem 5rem;
+  background-color: #d9d5b6;
+  color: rgb(60, 60, 60);
+  font-family: "Roboto Condensed", serif;
+}
+
+  /** Header, footer **/
+
+  header {
+    font-family: "Roboto Condensed", serif;
+  }
+  footer ol {
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr;
+    margin: 0 15vw;
+  }
+  
+  /** Main body of page etc **/
+  
+  article {
+    margin: 0 15vw;
+  }
+  
+  label {
+    align:center;
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    color: #d9d5b6;
+    font-family:"Roboto Condensed", serif;
+    /* text-transform: uppercase; */
+    font-size: 1.5rem;
+  }
+
+  /* .input-form {
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    align:center;
+  } */
+
+  /* #seed-word {
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    align:center;
+  }
+
+  #submit {
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    align:center;
+  } */
+
+  #form-center {
+    align:center;
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    color: #d9d5b6;
+  }
+
+  /* input {
+    align: center;
+    margin-left:2rem;
+    margin-right:0rem;
+    margin-top:1rem;
+    margin-bottom:0.1rem;
+  } */
+
+  .subtitle {
+    /* margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem; */
+    align:center;
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    font-size: 2.1rem;
+  }
+
+  .intro {
+    padding: 1rem 0 0 0;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: 20px;
+  }
+  
+  .intro img {
+    display: block;
+  }
+  .intro p {
+    font-size: 1.5rem;
+  }
+
+  .poem-title {
+    font-family: "Bree Serif", serif;
+    font-size: 1.8rem;
+    padding-left:17%;
+    text-align: left;
+    /* text-transform: uppercase; */
+    margin: 5rem 5rem 1rem 2rem;
+    padding-top:2%;
+  }
+
+  .poetry {
+    line-height: 1.4em;
+    font-size: 1.2rem;
+    padding-left:23%;
+    /* font-family: "Merriweather", sans-serif; */
+    font-family: "EB Garamond", sans-serif;
+    /* background-color:rgb(119, 145, 103)); */
+    /* padding-top:1%; */
+  }
+
+  p {
+    line-height: 1.6em;
+    font-size: 1.2rem;
+  }
+  
+  a {
+    color: #70a24c;
+  }
+  a:hover {
+    color: rgb(15, 106, 8);
+  }
+  
+  .question {
+    font-weight:bolder;
+  }
+
+  .answer {
+    font-style:italic;
+  }
+
+  .credit-bottom {
+    font-size: xx-small;
+    font-family: "Roboto Condensed", sans-serif;
+    margin-left:5rem;
+    margin-right:5rem;
+
+  }
+
+  
+  /* Specific section areas */
+  
+  .essays .grid h3,
+  .three-row h3,
+  .four-row h3 {
+    font-size: 1.25rem;
+    font-weight: normal;
+    text-align: center;
+  }
+  
+  .three-row p,
+  .four-row p {
+    font-size: 1rem;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  .center {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .align-left {
+    float: left;
+    margin-right: 2rem;
+  }
+  
+  .align-right {
+    float: right;
+    margin-left: 2rem;
+  }
+  
+  
+  
+  .half {
+    max-width: 45% !important;
+  }
+  .quarter {
+    max-width: 24% !important;
+  }
+  .three-quarters {
+    max-width: 74% !important;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Roboto Condensed", serif;
+    /* color: rgb(60, 60, 60); */
+    clear: both;
+  }
+  h3 a,
+  h4 a,
+  h5 a,
+  h6 a {
+    /* color: rgb(5, 44, 5) !important; */
+    text-decoration: none;
+  }
+  
+  h1 {
+    text-align: left;
+    margin: 5rem 1rem 1rem 0;
+    font-size: 3rem;
+    font-weight: normal;
+  }
+  h2 {
+    /* padding-left:17%;
+    text-align: left; */
+    /* text-transform: uppercase; */
+    /* margin: 5rem 1rem 1rem 1rem;
+    font-size: 2.1rem; */
+  }
+  h3 {
+    font-size: 1.75rem;
+    font-weight: normal;
+  }
+
+  .page-title {
+    align:center;
+    margin-left:5rem;
+    margin-right:5rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    color: #d9d5b6;
+    font-size:5rem;
+  }
+
+  .page h2 {
+    text-align: left;
+    text-transform: none;
+    margin: 2rem 0 1rem 0;
+    font-weight: normal;
+  }
+  .page h3 {
+    font-size: 1.5rem;
+    color: rgb(120, 120, 120);
+  }
+
+  .back-button {
+    background-color: rgb(60, 60, 60);;
+    color: rgb(164, 157, 157);
+    size:200px;
+    margin-top: 10%;
+    margin-left:20%;
+    padding-left:3%;
+    padding-right:3%;
+    padding-bottom:1%;
+    padding-top:1%;
+  }
+  
+  .round {
+    border-radius: 15%;
+  }
+
+  .info-click {
+    /* font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", */
+      /* "Courier New", monospace; */
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .info-share {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1rem;
+    margin-left:5rem;
+    margin-right:5rem;
+    /* text-transform: uppercase; */
+  }
+  
+  pre {
+    background: rgb(240, 240, 240);
+    padding: 1rem;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+    white-space: pre-wrap;
+  }
+  
+  .circle {
+    border: solid 0.5em rgb(240, 240, 240);
+    border-radius: 100%;
+  }
+  
+  blockquote {
+    margin: 0;
+    border-left: 1px solid rgb(120, 120, 120);
+    padding-left: 1rem;
+    font-family: "Roboto Condensed", serif;
+  
+  }
+  blockquote p {
+    color: rgb(120, 120, 120);
+    margin: 1rem 0 0 0 0;
+  }
+  blockquote p:first-of-type {
+    margin: 0;
+  }
+
+
+  .columns {
+    columns: 2 auto;
+    padding: 1rem 0 0;
+    column-gap: 2rem;
+  }
+  .columns ul,
+  .columns ul p {
+    margin: 0;
+    padding: 0;
+  }
+  .columns ul li {
+    margin-bottom: 1rem;
+  }
+  
+  li {
+    break-inside: avoid-column;
+    font-size: 1.2rem;
+  }
+
+  .poetry blockquote {
+    border: none;
+    margin: auto;
+    width: 50%;
+  }
+  
+  .img-small {
+    max-width: 30%;
+  }
+  .img-medium {
+    max-width: 50%;
+  }
+  .small {
+    font-size: smaller;
+  }
+
+  .section-break {
+    padding-top: 3em;
+    clear: both;
+  }
+
+  
+  .full-width {
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    position: relative;
+    right: 50%;
+    width: 100vw;
+  }
+  .full-width img {
+    margin: 0;
+  }
+  
+
+  .license {
+  
+    margin: 2rem 0;
+  }
+  
