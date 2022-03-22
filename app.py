@@ -258,6 +258,8 @@ def index():
     if request.method == "POST":
         # get result from form
         word = form.seed_word.data
+        if (word.count(" ") > 0) or (not word.isalpha()):
+            return render_template('500.html'), 500
         logging.info(f"word input is {word}")
         lines = CorpusLine.query.order_by(func.random()).limit(345000) # TODO: modify amount
         logging.info("lines acquired")
