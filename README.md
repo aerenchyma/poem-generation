@@ -16,7 +16,7 @@ If you have problems, please let me know or open an issue on the repo! Not promi
 
 The day I got my second COVID vaccine in April 2021, I lay around on the couch and started building this. But I got tired... Then I bought a new computer for myself in early 2022 and thought this would be fun to return to this year. Including an excellent lesson in memory consumption, the whole process has been a delight.
 
-The code itself is still a little messy ("oh right that's why we typically use linters"), so please ignore. In my defense, I wrote a lot of it while pretty sleepy (and happy).
+The code itself is still a little messy ("oh right that's why we typically use linters"), so please ignore. In my defense, I wrote a decent chunk of it while pretty sleepy.
 
 ## tl;dr
 
