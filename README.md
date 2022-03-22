@@ -4,7 +4,7 @@ This is a website that creates poems based on single-word inspiration any site v
 
 ## NaPoGenMo ~2021~ 2022
 
-This was originally an entry for [NaPoGenMo 2021](https://github.com/NaPoGenMo/NaPoGenMo2021). It's now...maybe? (I don't want to cheat so maybe I'll do something else fun) an entry for NaPoGenMo 2022, with the caveat that I started it in 2021.
+This was originally an entry for [NaPoGenMo 2021](https://github.com/NaPoGenMo/NaPoGenMo2021).
 
 I strongly recommend the poems aloud dramatically -- it makes them sound good (...most of the time).
 
