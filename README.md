@@ -6,15 +6,17 @@ This is a website that creates poems based on single-word inspiration any site v
 
 This was originally an entry for [NaPoGenMo 2021](https://github.com/NaPoGenMo/NaPoGenMo2021). It's now...maybe? (I don't want to cheat so maybe I'll do something else fun) an entry for NaPoGenMo 2022, with the caveat that I started it in 2021.
 
-## story 
-
-The day I got my second COVID vaccine in April 2021, I lay around on the couch and started building this. But I got tired... Then I bought a new computer for myself in early 2022 and thought this would be fun to return to this year. Including an excellent lesson in memory consumption, the whole process has been a delight.
-
 I strongly recommend the poems aloud dramatically -- it makes them sound good (...most of the time).
 
 You can see and interact with it [here](https://stanza-extravaganza.herokuapp.com/). 
 
 If you have problems, please let me know or open an issue on the repo! Not promising to fix everything, but I'm definitely curious.
+
+## story 
+
+The day I got my second COVID vaccine in April 2021, I lay around on the couch and started building this. But I got tired... Then I bought a new computer for myself in early 2022 and thought this would be fun to return to this year. Including an excellent lesson in memory consumption, the whole process has been a delight.
+
+The code itself is still a little messy ("oh right that's why we typically use linters"), so please ignore. In my defense, I wrote a lot of it while pretty sleepy (and happy).
 
 ## tl;dr
 
