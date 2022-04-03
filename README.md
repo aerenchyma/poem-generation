@@ -1,6 +1,6 @@
 # Stanza Extravaganza
 
-This is a website that creates poems based on single-word inspiration any site visitor can input.
+A Flask app (and website?) that creates poems based on single-word inspiration any site visitor can input.
 
 ## NaPoGenMo ~2021~ 2022
 
@@ -16,7 +16,7 @@ If you have problems, please let me know or open an issue on the repo! Not promi
 
 The day I got my second COVID vaccine in April 2021, I lay around on the couch and started building this. But I got tired... Then I bought a new computer for myself in early 2022 and thought this would be fun to return to this year. Including an excellent lesson in memory consumption, the whole process has been a delight.
 
-The code itself is still a little messy ("oh right that's why we typically use linters"), so please ignore. In my defense, I wrote a decent chunk of it while pretty sleepy.
+The code itself is still a little messy ("fun without linters after work"), so please ~ignore. In my defense, I wrote a decent chunk of it while pretty sleepy.
 
 ## tl;dr
 
@@ -24,7 +24,7 @@ This is basically a bunch of awesome and fun tools built by [Allison Parrish](ht
 
 Also major thanks to [Liza Daly](https://lizadaly.com/) who suggested I try NaPoGenMo in the first place.
 
-Highly recommend checking out both their work. Both of them remind me why I like computers. 
+Highly recommend checking out both their work; both of them remind me why I like computers. 
 
 ## Credits
 
